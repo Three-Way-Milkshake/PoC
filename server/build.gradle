@@ -1,0 +1,20 @@
+/* groovylint-disable-next-line CompileStatic */
+apply plugin: 'java'
+apply plugin: 'application'
+
+// mainClassName = 'it.unipd.threewaymilkshake.portacs.server.Server'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'com.google.code.gson:gson:2.8.6'
+    // testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+    testImplementation "junit:junit:4.12"
+    // testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+}
+
+// test {
+//     useJUnitPlatform()
+// }

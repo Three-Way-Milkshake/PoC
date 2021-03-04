@@ -1,0 +1,8 @@
+.freccia_nera, .freccia_verde, .play_stop {
+    width: 15%;
+    float:left;
+}  
+
+h1 {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}

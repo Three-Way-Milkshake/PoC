@@ -1,0 +1,16 @@
+h1 {
+    font-size: 2em;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.mappa{
+    margin-left: 20%;
+}
+.legend{
+    font-size: 1.5em;
+}
+.legend ul{
+    list-style-type: none;
+}
+.legend ul li img{
+    width: 1em;
+}
