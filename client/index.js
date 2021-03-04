@@ -59,7 +59,7 @@ client.on('data', (data)=>{
                 break;
             case "MAP":
                 
-                //map.createMap(cmd[1], cmd[2], cmd[3]);
+                map.createMap(cmd[1], cmd[2], cmd[3]);
                 io.emit("mappa", map.getMap());
                 io.on("connection", (socket) => {
                     
@@ -90,7 +90,7 @@ client.on('data', (data)=>{
     if (!stopped) {
         
         io.on("connection", (socket) => {
-            socket.emit("frecce", mosse.getMossa()); //cambiare angular
+            socket.emit("frecce", mosse.getMossa()); 
         });
         
     }
