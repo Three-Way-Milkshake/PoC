@@ -45,4 +45,18 @@ public class TestMap {
     assertEquals("111110011010100110111100a110111b", m.toString());
     // assertEquals("a(3,0)b(3,7)", m.getPOIList());
   }
+
+  @Test
+  public void TestPath2(){
+    char[][] arr = new char[][] { 
+      { '1', '1', '1', '1', '1', '0', '0', '1'}, 
+      { '1', '0', '1', '0', '1', '0', '0', '1' }, 
+      { '1', '0', '1', '1', '1', '1', '0', '0' },
+      { 'a', '1', '1', '0', '1', '1', '1', 'b'} 
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point(1,0,Direction.DOWN), m.getPOIPosition('b')).toString().replaceAll("(,| |\\[|\\])", "");
+    assertEquals("TMRMMRMMLMMRMLMMM", res);
+  }
 }

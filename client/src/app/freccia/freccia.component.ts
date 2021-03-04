@@ -13,6 +13,13 @@ const socket = io("http://127.0.0.1:8080/");
 })
 
 export class FrecciaComponent implements OnInit {
+
+  /*
+  dir[0] sx
+  dir[1] turnaround
+  dir[2] dx
+  dir[3] start/stop
+  */
   dir: boolean[] = [false, false, false, false];
   isMoving : boolean = false;
   constructor(private http : HttpClient, private ngZone: NgZone) {
@@ -27,24 +34,31 @@ export class FrecciaComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.onNewMessage().subscribe((data) => {
-      this.ngZone.run(() => {
-          let c = 0;
-          let i = 0;
-          while (i < 4) {
-            if (String(data)[i] ==="0") {
-             this.dir[i] = false;
-             c++;
-          } else {
-           this.dir[i] = true;
-           }
-           i++;
+ngOnInit() {
+  this.onNewMessage().subscribe((data) => {
+    this.ngZone.run(() => {
+      switch(data) {
+        case "R":
+          this.dir = [false, false, true, false];
+        break;
+        case "L":
+          this.dir = [true, false, false, false];
+          break;
+        case "T":
+          this.dir = [false, true, false, false];
+          break;
+        case "S":
+          this.dir = [false, false, false, false];
+          break;
+        case "M":
+          this.dir = [false, false, false, true];
+        break;
       }
-      this.isMoving = (c == 4) ? false : true;
-        });      
-        console.log(this.isMoving)
-    });
-  }
+      
+      });      
+      console.log(data);
+  });
+}
+
 }
 
