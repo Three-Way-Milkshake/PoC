@@ -23,6 +23,7 @@ dir:
 */
 
 
+
 let c = new Container();
 
   //-----------------------------CLIENT---------------------------------
@@ -57,13 +58,14 @@ client.on('data', (data)=>{
                 }); 
                 break;
             case "MAP":
-                map.createMap(cmd[1], cmd[2], cmd[3]);
+                
+                //map.createMap(cmd[1], cmd[2], cmd[3]);
                 io.emit("mappa", map.getMap());
                 io.on("connection", (socket) => {
                     
                     socket.emit("mappa", map.getMap());
                 });
-               
+                
                 break;
             case "PATH":
                 mosse.createMosse(cmd[1]);
@@ -86,13 +88,13 @@ client.on('data', (data)=>{
         }
     }
     if (!stopped) {
-        io.emit("frecce", mosse.getMossa()); //cambiare angular
-        /*
+        
         io.on("connection", (socket) => {
             socket.emit("frecce", mosse.getMossa()); //cambiare angular
         });
-        */
+        
     }
+    
 });
 
 
@@ -128,32 +130,12 @@ function onErr(err) {
 
 
 io.on("connection", (socket) => {
-   /*
-    setInterval(() => {
-        let s = '';
-        let j = Math.random();
-        if (j >= 0.8) {
-            s = '1000';
-        } else if (j >= 0.6) {
-            s = '0100';
-        } else if (j >= 0.4) {
-            s = '0010';
-        } else if (j >= 0.2){
-            s = '0001';
-        } else {
-            s = '0000';
-        }
-        socket.emit("frecce", s);
-    }, 1000, socket);
-    */
-    
-    //setInterval(() => {
     socket.emit("pulsante");
     console.log("mostra il pulsante");
     //}, 10000, socket);
     
 
-    //socket.emit("frecce", "0010");
+    //socket.emit("frecce", "M");
     //socket.emit("mappa", map.getMap());
     
     const lista = new Lista();

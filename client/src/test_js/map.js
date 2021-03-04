@@ -15,21 +15,23 @@ class Map {
       this.map = m;
     }
 
+  
+
     getMap() {
       return this.mapToString();
     }
     
     createMap(r, c, seq) {
-      console.log(seq)
-      let counter=0;
+      
       for (let i = 0; i < r; i++) {
+        let counter = 0
         this.map[i] = [];
         for (let j = 0; j < c; j++) {
-          // this.map[i][j] = seq[i*r + j];
           this.map[i][j] = seq[counter++];
-          console.log("riga: "+i+", col: "+j+": "+seq[counter]);
+          console.log(seq[counter++]);
         }
       }
+      
     }
     
     mapToString() { //per angular

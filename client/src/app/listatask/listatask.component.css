@@ -7,3 +7,13 @@
     border-radius: 85px;   
     float: left;
 }
+ol {
+    font-size: 2.5em;
+    margin-left: 3%;
+   
+}
+li{
+    padding: 0.2em;
+    border: 1px solid #000;
+    width: 2%;
+}

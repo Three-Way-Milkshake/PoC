@@ -13,7 +13,8 @@ const socket = io("http://127.0.0.1:8080/");
 })
 export class ListataskComponent implements OnInit {
   showButton : boolean = false;
-  lista : string = '';
+  //lista : string = '';
+  lista : string [] = [];
 
   constructor(private http: HttpClient, private ngZone: NgZone) {
     socket.on("pulsante", () => {
@@ -40,7 +41,7 @@ export class ListataskComponent implements OnInit {
       });
     });
   }
-
+/*
   setValues(data : string) {
     this.lista = '<ol>';
     let i = 0;
@@ -49,4 +50,11 @@ export class ListataskComponent implements OnInit {
     }
     this.lista += '</ol>';
   }
+*/
+  setValues(data : string) {
+    for (let i = 0; i < data.length; i++) {
+      this.lista[i] = data[i];
+    }
+  }
+  
 }
