@@ -59,7 +59,7 @@ client.on('data', (data)=>{
                 break;
             case "MAP":
                 
-                //map.createMap(cmd[1], cmd[2], cmd[3]);
+                map.createMap(cmd[1], cmd[2], cmd[3]);
                 io.emit("mappa", map.getMap());
                 io.on("connection", (socket) => {
                     
@@ -69,6 +69,7 @@ client.on('data', (data)=>{
                 break;
             case "PATH":
                 mosse.createMosse(cmd[1]);
+                console.log("PATH"+cmd[1]);
             
                 break;
             case "STOP":
@@ -89,8 +90,17 @@ client.on('data', (data)=>{
     }
     if (!stopped) {
         
+        /* io.emit("frecce", mosse.getMossa()); //cambiare angular
+        
         io.on("connection", (socket) => {
-            socket.emit("frecce", mosse.getMossa()); //cambiare angular
+            socket.emit("frecce", mosse.getMossa()); 
+            
+        }); */
+        io.emit("frecce", mosse.getMossa()); //cambiare angular
+        
+        io.on("connection", (socket) => {
+            socket.emit("frecce", mosse.getMossa()); 
+            
         });
         
     }

@@ -76,9 +76,9 @@ export class MapComponent implements OnInit {
           tabellaHtml += '<td><img src="assets/up.png"></td>';
         } else if(map[i][j] === 'Z'){
           tabellaHtml += '<td><img src="assets/muletto.png"></td>';
-        } else {
+        } else { //POI
           
-          tabellaHtml += '<td style="background-color: #red;">'+map[i][j]+'</td>';          
+          tabellaHtml += '<td style="background-color: red;">'+map[i][j]+'</td>';          
         }
       }
       tabellaHtml += '</tr>';

@@ -12,6 +12,7 @@ class Listamosse {
     }
 
     getMossa() {
+        //console.log(this.mosse);
         return this.mosse.shift();
     }
 

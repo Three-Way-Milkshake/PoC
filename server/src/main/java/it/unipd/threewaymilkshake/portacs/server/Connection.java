@@ -89,9 +89,15 @@ class Connection {
         }
         System.out.println();
         switch(par[0]){
-          case "POS": updatePosition(par); break;
-          case "PATH": out.print("PATH,"+calculateAndGetPathToNextTask()+";"); break;
-          default: System.out.println("Unrecognized message: "+par[0]);
+          case "POS": 
+            updatePosition(par); 
+            break;
+          case "PATH": 
+            // out.print("PATH,"+calculateAndGetPathToNextTask()+";"); 
+            out.print("PATH,MMLMMRMTMRMRMLMTMM;"); 
+            break;
+          default: 
+            System.out.println("Unrecognized message: "+par[0]);
         }
         System.out.println("I am at: "+actualPosition.toString());
       });

@@ -21,7 +21,7 @@ export class FrecciaComponent implements OnInit {
   dir[3] start/stop
   */
   dir: boolean[] = [false, false, false, false];
-  isMoving : boolean = false;
+
   constructor(private http : HttpClient, private ngZone: NgZone) {
     
   }
@@ -30,6 +30,7 @@ export class FrecciaComponent implements OnInit {
     return new Observable(observer => {
       socket.on('frecce', (msg: string) => {
         observer.next(msg);
+        
       });
     });
   }
