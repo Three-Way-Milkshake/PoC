@@ -59,11 +59,11 @@ client.on('data', (data)=>{
             case "MAP":
                 map.createMap(cmd[1], cmd[2], cmd[3]);
                 io.emit("mappa", map.getMap());
-                /*io.on("connection", (socket) => {
+                io.on("connection", (socket) => {
                     
                     socket.emit("mappa", map.getMap());
                 });
-                */
+               
                 break;
             case "PATH":
                 mosse.createMosse(cmd[1]);

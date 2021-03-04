@@ -6,7 +6,7 @@ class Listamosse {
     mosse = [];
 
     createMosse(seq){
-        for (let i = 0; i < seq.lenght; i++) {
+        for (let i = 0; i < seq.length; i++) {
             this.mosse.push(seq[i]);
         }
     }
