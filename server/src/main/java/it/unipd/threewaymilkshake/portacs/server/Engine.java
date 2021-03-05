@@ -1,14 +1,19 @@
 package it.unipd.threewaymilkshake.portacs.server;
 
 import java.util.Deque;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 class Engine implements Runnable {
   private ConcurrentLinkedQueue<Connection> connections;
   private WareHouseMap map;
   private Deque<Deque<Character>> tasksList;
+  private Set<Connection> managers=new HashSet<>();
 
   Engine(ConcurrentLinkedQueue<Connection> c, WareHouseMap map, Deque<Deque<Character>> tasksList) {
     this.connections = c;
@@ -21,15 +26,21 @@ class Engine implements Runnable {
     while (true) {
       if (!connections.isEmpty()) {
         for (Connection c : connections) {
-          c.send("ALIVE");
-          if (!c.isAlive()) {
-            connections.remove(c);
-            System.out.println("Found a closed connection, removing it from list...");
-          } else {
-            //System.out.println("Received: " + c.getLastMessage());
-            c.process();
+          if(!c.isManager()){
+              c.send("ALIVE");
+            if (!c.isAlive()) {
+              connections.remove(c);
+              System.out.println("Found a closed connection, removing it from list...");
+            } else {
+              //System.out.println("Received: " + c.getLastMessage());
+              c.process();
+            }
+          }
+          else{
+            managers.add(c);
           }
         }
+        sendAllPositionsToManagers();
         System.out.println("Doing sth, there are: " + connections.size());
       } else {
         System.out.println("No unit connected...");
@@ -41,5 +52,22 @@ class Engine implements Runnable {
         e.printStackTrace();
       }
     }
+  }
+
+  private void sendAllPositionsToManagers(){
+    StringBuilder b=new StringBuilder();
+    b.append("UNI");
+    List<Connection> units=connections.stream()
+      .filter(c->!c.isManager())
+      .collect(Collectors.toList());
+
+    units.stream().forEach(u->{
+      b.append(u.getPosition().toNodeString());
+    });
+    b.append(";");
+    String positions=b.toString();
+    managers.stream().forEach(m->{
+      m.send(positions);
+    });
   }
 }
