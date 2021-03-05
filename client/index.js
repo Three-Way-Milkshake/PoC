@@ -39,6 +39,7 @@ let c = new Container();
 
 var client = net.connect(SERVER_PORT, 'localhost', ()=>{
     console.log('connected to server');
+    client.write("UNIT\n");
     client.setNoDelay();
 });
 client.setEncoding('utf8');
@@ -135,9 +136,9 @@ function onErr(err) {
 io.on("connection", (socket) => {
     socket.emit("pulsante");
     console.log("mostra il pulsante");
-    /* socket.emit("mappa", map.getMap());
+    // socket.emit("mappa", map.getMap());
     socket.emit("lista", lista.getLista());
-    console.log("connected someone"); */
+    // console.log("connected someone");
     //}, 10000, socket);
     
 

@@ -28,25 +28,31 @@ class Connection {
     try {
       out = new PrintWriter(socket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-//      int[][] m=map.toIntMatrix();
-      out.print("MAP,");
-      out.print(map.getRows());
-      out.print(',');
-      out.print(map.getColumns());
-      out.print(',');
-      /* Arrays.stream(map.toIntMatrix()).forEach(r->{
-        Arrays.stream(r).forEach(i->{
-          out.print(i);
-        });
-      }); */
-      out.print(map.toString()+";");
-      out.print("LIST,"+tasks.toString().replaceAll("(,| |\\[|\\])", "")+";");
-      out.println();
-      // out.println("HELLO");
-      /*
-       * out.println("MAP"); Gson g=new Gson(); int[][] arr=new int[3][3];
-       * g.toJson(arr); out.println(g.toString());
-       */
+      String type=in.readLine();
+      if(type.equals("UNIT")){
+  //      int[][] m=map.toIntMatrix();
+        out.print("MAP,");
+        out.print(map.getRows());
+        out.print(',');
+        out.print(map.getColumns());
+        out.print(',');
+        /* Arrays.stream(map.toIntMatrix()).forEach(r->{
+          Arrays.stream(r).forEach(i->{
+            out.print(i);
+          });
+        }); */
+        out.print(map.toString()+";");
+        out.print("LIST,"+tasks.toString().replaceAll("(,| |\\[|\\])", "")+";");
+        out.println();
+        // out.println("HELLO");
+        /*
+        * out.println("MAP"); Gson g=new Gson(); int[][] arr=new int[3][3];
+        * g.toJson(arr); out.println(g.toString());
+        */
+      }
+      else{
+        //responsabile
+      }
     } catch (IOException e) {
       e.printStackTrace();
     }
