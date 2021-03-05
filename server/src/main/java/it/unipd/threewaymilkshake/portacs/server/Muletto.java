@@ -1,18 +1,27 @@
-package it.unipd.threewaymilkshake.portacs.server.collision;
+package it.unipd.threewaymilkshake.portacs.server;
 
 import java.util.LinkedList;
 
-public class Connection {
+enum Move{TURNLEFT,TURNRIGHT,GOSTRAIGHT,TURNBACK,STOP}
+
+public class Muletto {
     public int id;
     public Point position;
     LinkedList<Move> nextMoves;
 
-    public Connection(int id, Point position) {
+    public Muletto(Connection con) {
+        this.id = con.getId();
+        this.position = con.getPosition();
+        this.nextMoves = con.getFirstTwoMoves();
+    }
+
+
+    public Muletto(int id, Point position) {
         this.id = id;
         this.position = position;
     }
 
-    public Connection(int id, Point position, LinkedList<Move> nextMoves) {
+    public Muletto(int id, Point position, LinkedList<Move> nextMoves) {
         this.id = id;
         this.position = position;
         this.nextMoves = nextMoves;
@@ -27,25 +36,25 @@ public class Connection {
     public boolean equals(Object obj) {
         if (getClass() != obj.getClass())
             return false;
-        Connection other = (Connection) obj;
+        Muletto other = (Muletto) obj;
         if (id != other.id)
             return false;
         return true;
     }
 
-    public void printConnection() {
-        System.out.println(id + " " + position.x + position.y);
+    public void printMuletto() {
+        System.out.println(id + " " + position.getX() + position.getY());
     }
 
     public void printNextMoves() {
-        for(Move m : nextMoves) {
+        for (Move m : nextMoves) {
             System.out.printf(m.toString() + " ");
         }
         System.out.printf("\n");
     }
 
-
     Move getMove(Integer i) {
+        if(nextMoves.isEmpty()) return Move.STOP;
         return nextMoves.get(i);
     }
 }

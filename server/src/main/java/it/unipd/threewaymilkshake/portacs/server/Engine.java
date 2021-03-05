@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
+
 class Engine implements Runnable {
   private ConcurrentLinkedQueue<Connection> connections;
   private WareHouseMap map;
@@ -30,7 +31,17 @@ class Engine implements Runnable {
             c.process();
           }
         }
-        // posizioni aggiornate fun(connections)
+
+        /********************/
+        LinkedList<Muletto> incomingConnections = new LinkedList<Muletto>();
+        while (!connections.isEmpty()) {
+            incomingConnections.add(new Muletto(connections.poll()));        
+        }
+        ServerCentrale serverCentrale = new ServerCentrale(incomingConnections);
+        serverCentrale.organizer();
+        /********************/
+
+
         System.out.println("Doing sth, there are: " + connections.size());
       } else {
         System.out.println("No unit connected...");

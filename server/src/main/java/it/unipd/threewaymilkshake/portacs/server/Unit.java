@@ -1,8 +1,7 @@
-package it.unipd.threewaymilkshake.portacs.server.collision;
+package it.unipd.threewaymilkshake.portacs.server;
 import java.util.Arrays;
 import java.util.LinkedList;
 
-enum Move{TURNLEFT,TURNRIGHT,GOSTRAIGHT,TURNBACK,STOP}
 
 /*class Path {
      // for test purpose

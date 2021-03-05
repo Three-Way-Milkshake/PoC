@@ -5,12 +5,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-class Connection {
+public class Connection {
   private Socket socket;
   private BufferedReader in;
   private PrintWriter out;
@@ -72,7 +73,7 @@ class Connection {
     return pathToNextTask.toString().replaceAll("(,| |\\[|\\])", "");
   }
 
-  public void updatePosition(int x, int y, Direction d){
+  public void updatePosition(int x, int y, Orientation d){
     actualPosition.set(x, y, d);
   }
 
@@ -80,7 +81,7 @@ class Connection {
     updatePosition(
       Integer.parseInt(par[1]), 
       Integer.parseInt(par[2]),
-      Direction.values()[Integer.parseInt(par[3])]
+      Orientation.values()[Integer.parseInt(par[3])]
     );
   }
 
@@ -135,6 +136,34 @@ class Connection {
 
   public String getLastMessage() {
     return lastMessage;
+  }
+  public int getId() {
+    return id;
+  }
+
+  public LinkedList<Move> getFirstTwoMoves() {
+    LinkedList<Move> toReturn = new LinkedList<Move>();
+    // TODO
+    if(pathToNextTask.size() > 0) {
+      Character move = pathToNextTask.get(0);
+      toReturn.add(characterToMove(move));
+    }
+      if(pathToNextTask.size() > 1) {
+        Character move = pathToNextTask.get(1);
+        toReturn.add(characterToMove(move));
+      }
+
+  }
+
+  public static Move characterToMove(Character m) {
+    if(m.toString() == ("R"))
+      return Move.TURNRIGHT;
+    else if(m.toString() == "L")
+      return Move.TURNLEFT;
+    else if(m.toString() == "T")
+      return Move.TURNBACK;
+    else // M
+      return Move.GOSTRAIGHT;
   }
 
   public void close() {

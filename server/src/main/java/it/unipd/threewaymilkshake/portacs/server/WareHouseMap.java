@@ -89,10 +89,10 @@ class WareHouseMap {
   }
 
   public Deque<Character> getPath(Point start, Point end){
-    return getPath(start.getX(), start.getY(), end.getX(), end.getY(), start.getDirection());
+    return getPath(start.getX(), start.getY(), end.getX(), end.getY(), start.getOrientation());
   }
 
-  public Deque<Character> getPath(int startX, int startY, int endX, int endY, Direction dir) {
+  public Deque<Character> getPath(int startX, int startY, int endX, int endY, Orientation dir) {
     int[][] arr=toIntMatrix();
 
     arr[startX][startY]=9;
@@ -174,10 +174,10 @@ enum CellType {
   OBSTACLE, NEUTRAL, UP, DOWN, RIGHT, LEFT, POI
 };
 
-enum Direction{
+enum Orientation{
   UP, RIGHT, DOWN, LEFT; //0 1 2 3
 
-  /* public static char turnLeft(Direction d){
+  /* public static char turnLeft(Orientation d){
     return switch(d){
       case UP -> 'L';
       case DOWN -> 'R';

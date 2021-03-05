@@ -1,9 +1,9 @@
-package it.unipd.threewaymilkshake.portacs.server.collision;
+package it.unipd.threewaymilkshake.portacs.server;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Random;
-
 
 class Action {
     public LinkedList<String> actions; //STOP o RICALCOLO
@@ -53,16 +53,16 @@ class Action {
 
 public class Solver {
     
-    HashMap<Connection,Action> response; //responso
-    HashMap<Point,LinkedList<Connection>> collisions; //input: signalled collisions
+    HashMap<Muletto,Action> response; //responso
+    HashMap<Point,LinkedList<Muletto>> collisions; //input: signalled collisions
 
-    public Solver(HashMap<Point, LinkedList<Connection>> collisions) {
-        this.response = new HashMap<Connection,Action>();
+    public Solver(HashMap<Point, LinkedList<Muletto>> collisions) {
+        this.response = new HashMap<Muletto,Action>();
         this.collisions = collisions;
     }
 
     public void printResponse() {
-        for(Connection key : response.keySet()) 
+        for(Muletto key : response.keySet()) 
         {
             System.out.printf(key.id + ": ");
             response.get(key).printList();
@@ -71,10 +71,10 @@ public class Solver {
     }
 
     public void checkNumberOfCollisions() {
-        HashMap<Connection,Integer> numberOfCollision = new HashMap<Connection,Integer>();
+        HashMap<Muletto,Integer> numberOfCollision = new HashMap<Muletto,Integer>();
         for(Point key : collisions.keySet()) 
         {
-            for(Connection unit : collisions.get(key)) 
+            for(Muletto unit : collisions.get(key)) 
             {
                 Integer j = numberOfCollision.get(unit);
                 numberOfCollision.put(unit,(j == null) ? 1 : j + 1);
@@ -83,7 +83,7 @@ public class Solver {
         }
 
 
-        for(Connection key : numberOfCollision.keySet()) 
+        for(Muletto key : numberOfCollision.keySet()) 
         {
             //System.out.println(key.id + ":" + numberOfCollision.get(key));
             
@@ -98,7 +98,7 @@ public class Solver {
 
     }
 
-    public void setCollisions(Connection a, Connection b) {
+    public void setCollisions(Muletto a, Muletto b) {
         if(a.position.headOnRisk(b.position)) { // c'è rischio frontale
             if(response.get(a).isInStop()) {
                 response.get(a).add("STOP");
@@ -152,7 +152,7 @@ public class Solver {
         for(Point key : collisions.keySet()) 
         {
             int min = Integer.MAX_VALUE;
-            for(Connection unit : collisions.get(key)) 
+            for(Muletto unit : collisions.get(key)) 
             {
                 int distance = unit.position.calculateDistance(key);
                     if(distance == 0 || !response.get(unit).isInStop() && !response.get(unit).isCalculatingAgaing()) {
@@ -160,8 +160,8 @@ public class Solver {
                         min = distance;
                 }
             }
-            LinkedList<Connection> equals = new LinkedList<Connection>();
-            for(Connection unit : collisions.get(key)) 
+            LinkedList<Muletto> equals = new LinkedList<Muletto>();
+            for(Muletto unit : collisions.get(key)) 
             {             
                 int distance = unit.position.calculateDistance(key);
                     if(!response.get(unit).isInStop() && !response.get(unit).isCalculatingAgaing()) {
@@ -187,7 +187,7 @@ public class Solver {
         }
     }
 
-    HashMap<Connection,Action> collisionSolver()
+    HashMap<Muletto,Action> collisionSolver()
     {
         checkNumberOfCollisions();
         checkHeadOnCollision();

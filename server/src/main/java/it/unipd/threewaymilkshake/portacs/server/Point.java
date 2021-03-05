@@ -1,18 +1,18 @@
 package it.unipd.threewaymilkshake.portacs.server;
 
-class Point{
+public class Point{
   private int x;
   private int y;
-  private Direction dir;
+  private Orientation orientation;
   
   Point(int x, int y){
     this.x=x;
     this.y=y;
   }
 
-  Point(int x, int y, Direction dir){
+  Point(int x, int y, Orientation orientation){
     this(x, y);
-    this.dir=dir;
+    this.orientation=orientation;
   }
 
   Point(){}
@@ -25,14 +25,14 @@ class Point{
     return y;
   }
 
-  public Direction getDirection(){
-    return dir;
+  public Orientation getOrientation(){
+    return orientation;
   }
 
-  public void set(int x, int y, Direction dir){
+  public void set(int x, int y, Orientation orientation){
     this.x=x;
     this.y=y;
-    this.dir=dir;
+    this.orientation=orientation;
   }
 
   public boolean equals(Point p){
@@ -40,14 +40,14 @@ class Point{
   }
 
   public String toString(){
-		return "("+x+","+y+";"+dir+")";
+		return "("+x+","+y+";"+orientation+")";
 	}
 
   public char setNext(int xn, int yn){
     char r='n';
     if(xn<x){
       //up
-      r=switch(dir){
+      r=switch(orientation){
         case UP -> {
           --x;
           yield 'M';
@@ -56,11 +56,11 @@ class Point{
         case LEFT -> 'R';
         case RIGHT -> 'L';
       };
-      dir=Direction.UP;
+      orientation=Orientation.UP;
     }
     else if(xn>x){
       //down
-      r=switch(dir){
+      r=switch(orientation){
         case UP -> 'T';
         case DOWN -> {
           ++x;
@@ -69,11 +69,11 @@ class Point{
         case LEFT -> 'L';
         case RIGHT -> 'R';
       };
-      dir=Direction.DOWN;
+      orientation=Orientation.DOWN;
     }
     else if(yn<y){
       //left
-      r=switch(dir){
+      r=switch(orientation){
         case UP -> 'L';
         case DOWN -> 'R';
         case LEFT -> {
@@ -82,11 +82,11 @@ class Point{
         }
         case RIGHT -> 'T';
       };
-      dir=Direction.LEFT;
+      orientation=Orientation.LEFT;
     }
     else{
       //right
-      r=switch(dir){
+      r=switch(orientation){
         case UP -> 'R';
         case DOWN -> 'L';
         case LEFT -> 'T';
@@ -95,14 +95,14 @@ class Point{
           yield 'M';
         }
       };
-      dir=Direction.RIGHT;
+      orientation=Orientation.RIGHT;
     }
 
     return r;
   }
 
   public boolean isNext(int xn, int yn){
-    return switch(dir){
+    return switch(orientation){
       case UP -> x-1==xn;
       case DOWN -> x+1==xn;
       case LEFT -> y-1==yn;
@@ -124,4 +124,157 @@ class Point{
     }
     return r;
   }
+
+  public int calculateDistance(Point destination) {
+        if(this.x == destination.x)
+            return Math.abs(this.y-destination.y);
+        else if(this.y == destination.y)
+            return Math.abs(this.x-destination.x);
+        else 
+            return 0;
+  }
+
+  public Point goIntoNewPosition(Move move) {
+
+        if(move == Move.GOSTRAIGHT) {
+            if(this.orientation == Orientation.UP)
+                x--;
+            else if(this.orientation == Orientation.DOWN)
+                x++;
+            else if(this.orientation == Orientation.LEFT)
+                y--;
+            else //right
+                y++;
+        }
+        else if(move == Move.TURNLEFT) {
+            if(this.orientation == Orientation.UP)
+                orientation = Orientation.LEFT;
+            else if(this.orientation == Orientation.DOWN)
+                orientation = Orientation.RIGHT;
+            else if(this.orientation == Orientation.LEFT)
+                orientation = Orientation.DOWN;
+            else //right
+                orientation = Orientation.UP; 
+        }
+        else if(move == Move.TURNRIGHT) {
+            if(this.orientation == Orientation.UP)
+                orientation = Orientation.RIGHT;
+            else if(this.orientation == Orientation.DOWN)
+                orientation = Orientation.LEFT;
+            else if(this.orientation == Orientation.UP)
+                orientation = Orientation.LEFT;
+            else //right
+                orientation = Orientation.DOWN; 
+        }
+        else { //TURNBACK
+            if(this.orientation == Orientation.UP)
+                orientation = Orientation.DOWN;
+            else if(this.orientation == Orientation.DOWN)
+                orientation = Orientation.UP;
+            else if(this.orientation == Orientation.LEFT)
+                orientation = Orientation.RIGHT;
+            else //right
+                orientation = Orientation.LEFT; 
+        }
+        return this;
+    }
+
+    public boolean headOnRisk(Point b) {
+        if(x == b.x) {
+            if(y < b.y) {
+                return orientation == Orientation.RIGHT && b.orientation == Orientation.LEFT;
+            }
+            else if(y > b.y) {
+                return orientation == Orientation.LEFT && b.orientation == Orientation.RIGHT;
+            }
+        }
+        else if(y == b.y) {
+            if(x < b.x) {
+                return orientation == Orientation.DOWN && b.orientation == Orientation.UP;
+            }
+            else if(x > b.x) {
+                return orientation == Orientation.UP && b.orientation == Orientation.DOWN;
+            }
+        }
+        return false;
+    }
+
+    public Point TellNewPosition(Move move) {
+
+        if (move == Move.GOSTRAIGHT) {
+            if (this.orientation == Orientation.UP)
+                return new Point((x - 1), y, orientation);
+            else if (this.orientation == Orientation.DOWN)
+                return new Point((x + 1), y, orientation);
+            else if (this.orientation == Orientation.LEFT)
+                return new Point(x, (y - 1), orientation);
+            else // right
+                return new Point(x, (y + 1), orientation);
+        } else if (move == Move.TURNLEFT) {
+            if (this.orientation == Orientation.UP)
+                return new Point(x, y, Orientation.LEFT);
+            else if (this.orientation == Orientation.DOWN)
+                return new Point(x, y, Orientation.LEFT);
+            else if (this.orientation == Orientation.LEFT)
+                return new Point(x, y, Orientation.LEFT);
+            else // right
+                return new Point(x, y, Orientation.LEFT);
+        } else if (move == Move.TURNRIGHT) {
+            return new Point(x, y, Orientation.RIGHT);
+
+        } else if (move == Move.TURNBACK) {
+            // TURNBACK
+            if (this.orientation == Orientation.UP)
+                return new Point(x, y, Orientation.DOWN);
+            else if (this.orientation == Orientation.DOWN)
+                return new Point(x, y, Orientation.UP);
+            else if (this.orientation == Orientation.LEFT)
+                return new Point(x, y, Orientation.RIGHT);
+            else // right
+                return new Point(x, y, Orientation.LEFT);
+        }
+        return new Point(0, 0, Orientation.DOWN);
+    }
+
+    public Point Tell2NewPosition(Move move, Point p) {
+
+        if (move == Move.GOSTRAIGHT) {
+            if (p.orientation == Orientation.UP)
+                return new Point((p.x - 1), p.y, p.orientation);
+            else if (p.orientation == Orientation.DOWN)
+                return new Point((p.x + 1), p.y, p.orientation);
+            else if (p.orientation == Orientation.LEFT)
+                return new Point(p.x, (p.y - 1), p.orientation);
+            else // right
+                return new Point(p.x, (p.y + 1), p.orientation);
+        } else if (move == Move.TURNLEFT) {
+            if (p.orientation == Orientation.UP)
+                return new Point(p.x, p.y, Orientation.LEFT);
+            else if (p.orientation == Orientation.DOWN)
+                return new Point(p.x, p.y, Orientation.LEFT);
+            else if (p.orientation == Orientation.LEFT)
+                return new Point(p.x, p.y, Orientation.LEFT);
+            else // right
+                return new Point(p.x, p.y, Orientation.LEFT);
+        } else if (move == Move.TURNRIGHT) {
+            return new Point(p.x, p.y, Orientation.RIGHT);
+
+        } else if (move == Move.TURNBACK) {
+            // TURNBACK
+            if (p.orientation == Orientation.UP)
+                return new Point(p.x, p.y, Orientation.DOWN);
+            else if (p.orientation == Orientation.DOWN)
+                return new Point(p.x, p.y, Orientation.UP);
+            else if (p.orientation == Orientation.LEFT)
+                return new Point(p.x, p.y, Orientation.RIGHT);
+            else // right
+                return new Point(p.x, p.y, Orientation.LEFT);
+        }
+        return new Point(0, 0, Orientation.DOWN);
+    }
+
+
+    public String printPosition() {
+        return "< " + x + "," + y + "," + orientation.toString() + " >";
+    }
 }

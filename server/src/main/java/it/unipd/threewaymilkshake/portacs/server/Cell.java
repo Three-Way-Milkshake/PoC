@@ -1,4 +1,4 @@
-package it.unipd.threewaymilkshake.portacs.server.collision;
+package it.unipd.threewaymilkshake.portacs.server;
 import com.google.gson.annotations.SerializedName;
 
 enum CellType {
