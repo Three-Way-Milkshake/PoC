@@ -1,13 +1,21 @@
 const express = require("express");
 const app = express ();
-const port = 8080;
+const HTTP_PORT = 8080;
 const http = require ("http").createServer();
 const Map = require('./src/test_js/map');
 const Lista = require('./src/test_js/lista');
 const Container = require('./src/test_js/container');
 const Listamosse = require('./src/test_js/listamosse');
 const net = require('net');
-const PORT = 1723;
+const SERVER_PORT = 1723;
+
+const io = require("socket.io")(http, {
+    cors: {
+      origin: "http://localhost:4200",
+      methods: ["GET", "POST"]
+    }
+});
+
 let map = new Map();
 let mosse = new Listamosse();
 let lista = new Lista();
@@ -29,10 +37,9 @@ let c = new Container();
 
   //-----------------------------CLIENT---------------------------------
 
-var client = net.connect(PORT, 'localhost', ()=>{
+var client = net.connect(SERVER_PORT, 'localhost', ()=>{
     console.log('connected to server');
     client.setNoDelay();
-    //sendSth();
 });
 client.setEncoding('utf8');
 client.on('error', ()=>{
@@ -45,26 +52,15 @@ client.on('data', (data)=>{
     for (let i = 0; i < msg.length; i++) {
         let cmd = msg[i].split(",");
         switch(cmd[0]){
-            case "HELLO" : // non serve ad un tubo questo
-                c.aggiungiComando("MAP");                         //mostrare solo mappa di interesse
-                c.aggiungiComando("PATH");
-                c.aggiungiComando("LIST");
-                client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)+"\n", ()=>{
-                    console.log('response sent');
-                }); 
-                break;
             case "ALIVE": 
-                client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)+"\n", ()=>{
-                    console.log('response sent');
-                }); 
+                client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
+                //io.emit("mappa", map.getMap());
+                
                 break;
             case "MAP":
                 
                 map.createMap(cmd[1], cmd[2], cmd[3]);
-                io.emit("mappa", map.getMap());
-                io.on("connection", (socket) => {
-                    socket.emit("mappa", map.getMap());
-                });
+                //io.emit("mappa", map.getMap());
                 
                 break;
             case "PATH":
@@ -88,9 +84,10 @@ client.on('data', (data)=>{
                 for (let i = 0; i < cmd[1].length; i++) {
                     lista.addPOI(cmd[1][i]);
                 }
-                io.on("connection", (socket) => {
+                io.emit("lista", lista.getLista());
+                /* io.on("connection", (socket) => {
                     socket.emit("lista", lista.getLista());
-                });
+                }); */
 
                 break;     
             default: 
@@ -99,33 +96,20 @@ client.on('data', (data)=>{
     }
     if (!stopped) {
         
-        /* io.emit("frecce", mosse.getMossa()); //cambiare angular
-        
-        io.on("connection", (socket) => {
-            socket.emit("frecce", mosse.getMossa()); 
-            
-        }); */
-        io.emit("frecce", mosse.getMossa()); 
-        
-        io.on("connection", (socket) => {
-            socket.emit("frecce", mosse.getMossa()); 
-            
-        });
+        io.emit("frecce", mosse.getMossa());
+        //io.emit("mappa", map.getMap());
         
     }
+
+    client.write('\n', ()=>{
+        console.log("response sent");
+    });
     
 });
 
 
 
 //-----------------------------ANGULAR---------------------------------
-
-const io = require("socket.io")(http, {
-    cors: {
-      origin: "http://localhost:4200",
-      methods: ["GET", "POST"]
-    }
-  });
  
 client.on('end', ()=>{ 
     console.log('disconnected from server');
@@ -151,6 +135,9 @@ function onErr(err) {
 io.on("connection", (socket) => {
     socket.emit("pulsante");
     console.log("mostra il pulsante");
+    /* socket.emit("mappa", map.getMap());
+    socket.emit("lista", lista.getLista());
+    console.log("connected someone"); */
     //}, 10000, socket);
     
 
@@ -200,6 +187,6 @@ io.on("connection", (socket) => {
 
 });
 
-http.listen(port, () => {
-    console.log("server is listening" + port);
+http.listen(HTTP_PORT, () => {
+    console.log("server is listening" + HTTP_PORT);
 })

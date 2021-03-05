@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
     //this.getValues();
     this.onNewMossa().subscribe((data) =>{
       this.ngZone.run(() => {
-        console.log('ciaoo');
+        //console.log('ciao '+data);
         this.changePosition(String(data));
         
       }); 
@@ -34,7 +34,7 @@ export class MapComponent implements OnInit {
 
     this.onNewMessage().subscribe((data) => {
       this.ngZone.run(() => {
-        this.map;
+        this.setValues(String(data));
       });      
     });
     
