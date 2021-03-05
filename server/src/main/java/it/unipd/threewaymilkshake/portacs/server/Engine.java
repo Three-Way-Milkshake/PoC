@@ -30,6 +30,7 @@ class Engine implements Runnable {
             c.process();
           }
         }
+        // posizioni aggiornate fun(connections)
         System.out.println("Doing sth, there are: " + connections.size());
       } else {
         System.out.println("No unit connected...");

@@ -19,11 +19,15 @@ class Connection {
   private Deque<Character> tasks;
   private Deque<Character> pathToNextTask;
   private Point actualPosition;
+  private int id;
+
+  private  static int ID_COUNTER=0;
 
   Connection(Socket socket, WareHouseMap map, Deque<Character> tasks) {
     this.map=map;
     this.socket = socket;
     this.tasks=tasks;
+    this.id=++ID_COUNTER;
     actualPosition=new Point();
     try {
       out = new PrintWriter(socket.getOutputStream(), true);
@@ -56,6 +60,10 @@ class Connection {
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public Point getPosition(){
+    return actualPosition;
   }
 
   public String calculateAndGetPathToNextTask(){
