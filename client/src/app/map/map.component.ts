@@ -26,6 +26,7 @@ export class MapComponent implements OnInit {
     //this.getValues();
     this.onNewMossa().subscribe((data) =>{
       this.ngZone.run(() => {
+        console.log('ciaoo');
         this.changePosition(String(data));
         
       }); 
@@ -33,7 +34,7 @@ export class MapComponent implements OnInit {
 
     this.onNewMessage().subscribe((data) => {
       this.ngZone.run(() => {
-        this.setValues(String(data));
+        this.map;
       });      
     });
     
@@ -112,37 +113,50 @@ export class MapComponent implements OnInit {
     }
     console.log(arr);
     arr[this.posY][this.posX] = "Z"; //metto il muletto nella mappa 
+    console.log("muletto: "+arr[this.posY][this.posX]+", posX:"+this.posX + ", posY:"+this.posY);
     this.map = this.getMap(arr);
   }
 
   changePosition(mossa : string){
+    console.log(mossa);
     switch(mossa) {
       case "R":
-          this.dir = 'O';
+        if      (this.dir == 'N') this.dir = 'E';
+        else if (this.dir == 'O') this.dir = 'N';
+        else if (this.dir == 'S') this.dir = 'O';
+        else if (this.dir == 'E') this.dir = 'S';
+        
+
         break;
         case "L":
-          this.dir = 'E';
+          if      (this.dir == 'N') this.dir = 'O';
+          else if (this.dir == 'O') this.dir = 'S';
+          else if (this.dir == 'S') this.dir = 'E';
+          else if (this.dir == 'E') this.dir = 'N';
+          
           break;
         case "T":
-          if (this.dir == 'N') this.dir = 'S';
-          if (this.dir == 'S') this.dir = 'N';
-          if (this.dir == 'E') this.dir = 'O';
-          if (this.dir == 'O') this.dir = 'E';
+          if      (this.dir == 'N') this.dir = 'S';
+          else if (this.dir == 'O') this.dir = 'E';
+          else if (this.dir == 'S') this.dir = 'N';
+          else if (this.dir == 'E') this.dir = 'O';
+          
           break;
         case "S":
           //fermo non fa niente
           break;
         case "M":
-          if (this.dir == 'N') { 
+          if        (this.dir == 'N') { 
             this.posY --;
-          }
-          if (this.dir == 'S') {
+          } else if (this.dir == 'S') {
             this.posY ++;
+          } else if (this.dir == 'E') {
+            this.posX ++;
+          } else if (this.dir == 'O') {
+            this.posX --;
           }
-          if (this.dir == 'E') this.posX --;
-          if (this.dir == 'O') this.posY ++;
-        break;
-
+          break;
     }
+    socket.emit("mappa");
   }
 }

@@ -94,7 +94,7 @@ class Connection {
             break;
           case "PATH": 
             // out.print("PATH,"+calculateAndGetPathToNextTask()+";"); 
-            out.print("PATH,MMLMMRMTMRMRMLMTMM;"); 
+            out.print("PATH,TMMMLMMM;"); 
             break;
           default: 
             System.out.println("Unrecognized message: "+par[0]);

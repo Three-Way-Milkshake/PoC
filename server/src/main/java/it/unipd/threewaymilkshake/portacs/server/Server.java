@@ -52,11 +52,17 @@ public class Server {
       { 1, 1, 1, 0, 1, 1, 1, 1} 
     };
 
-    char[][] arr = new char[][] { 
+    /* char[][] arr = new char[][] { 
       { 'f', 'c', '1', 'd', '1', 'e', '0', '1'}, 
       { 'g', '0', '1', '0', '1', '0', '0', '1' }, 
       { 'h', '0', '1', '1', '1', '1', '0', '0' },
       { 'a', '1', '1', '0', '1', '1', '1', 'b'} 
+    }; */
+    char[][] arr = new char[][] { 
+      { '1', 'c', '1', 'd', '1', 'e', '0', '1'}, 
+      { '1', '0', '1', '0', '1', '0', '0', '1' }, 
+      { '1', '0', '1', '1', '1', '1', '0', '0' },
+      { '1', '1', '1', '1', '1', '1', '1', 'b'} 
     };
     WareHouseMap m=new WareHouseMap(arr);
     // m.getPath(2, 0, 3, 7, Direction.UP).forEach(i->System.out.print(i+" "));
@@ -66,11 +72,14 @@ public class Server {
     //   });
 
     Deque<Deque<Character>> tasksLists=new LinkedList<>();
-    tasksLists.add(new LinkedList<>(List.of('a', 'b', 'c')));
-    tasksLists.add(new LinkedList<>(List.of('d', 'g')));
     IntStream.range(0,100).forEach(i->{
-      tasksLists.add(new LinkedList<>(List.of('f', 'h', 'e')));
+      tasksLists.add(new LinkedList<>(List.of('b', 'b', 'b')));
     });
+    //tasksLists.add(new LinkedList<>(List.of('b', 'b', 'c')));
+    //tasksLists.add(new LinkedList<>(List.of('d', 'g')));
+    /* IntStream.range(0,100).forEach(i->{
+      tasksLists.add(new LinkedList<>(List.of('f', 'h', 'e')));
+    }); */
     System.out.println("there are: "+tasksLists.size()+" lists");
     
     

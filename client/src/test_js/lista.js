@@ -1,10 +1,20 @@
 class Lista {
     
-    lista = ['a', 'c', 'b', 'i', 's'];
-    constructor() {}
+    lista;
+    constructor() {
+      this.lista = [];
+    }
   
     getLista() {
       return this.listaToString();
+    }
+    
+    addPOI(p) {
+      this.lista.push(p);
+    }
+
+    removeFirstPOI() {
+      this.lista.shift();
     }
     
     listaToString() {

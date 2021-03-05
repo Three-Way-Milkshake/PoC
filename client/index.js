@@ -10,6 +10,7 @@ const net = require('net');
 const PORT = 1723;
 let map = new Map();
 let mosse = new Listamosse();
+let lista = new Lista();
 
 //da modificare x, y, dir
 let x = 0, y = 0, dir = 0;
@@ -62,7 +63,6 @@ client.on('data', (data)=>{
                 map.createMap(cmd[1], cmd[2], cmd[3]);
                 io.emit("mappa", map.getMap());
                 io.on("connection", (socket) => {
-                    
                     socket.emit("mappa", map.getMap());
                 });
                 
@@ -83,6 +83,15 @@ client.on('data', (data)=>{
                 break;
             case "START":
                 stopped = false;
+                break;
+            case "LIST":
+                for (let i = 0; i < cmd[1].length; i++) {
+                    lista.addPOI(cmd[1][i]);
+                }
+                io.on("connection", (socket) => {
+                    socket.emit("lista", lista.getLista());
+                });
+
                 break;     
             default: 
                 console.log("Unrecognized message from server");
@@ -96,7 +105,7 @@ client.on('data', (data)=>{
             socket.emit("frecce", mosse.getMossa()); 
             
         }); */
-        io.emit("frecce", mosse.getMossa()); //cambiare angular
+        io.emit("frecce", mosse.getMossa()); 
         
         io.on("connection", (socket) => {
             socket.emit("frecce", mosse.getMossa()); 
@@ -145,12 +154,13 @@ io.on("connection", (socket) => {
     //}, 10000, socket);
     
 
-    //socket.emit("frecce", "M");
+    // socket.emit("frecce", "M");
     //socket.emit("mappa", map.getMap());
     
-    const lista = new Lista();
-    socket.emit("lista", lista.getLista());
-    console.log("Inviata lista");
+    
+    socket.on("mappa", () => {
+        socket.emit("mappa", map.getMap());
+    });
     socket.on("comeback", () => {
         c.aggiungiComando("PATH"); //PATH -> taskfinite -> gestito da server
         c.aggiungiComando("MAP");

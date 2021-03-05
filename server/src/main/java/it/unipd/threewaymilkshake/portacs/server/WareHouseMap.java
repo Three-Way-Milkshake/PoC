@@ -11,7 +11,7 @@ import java.util.Map;
 class WareHouseMap {
   private CellType[][] map;
   private char[][] map2;
-  private Map<Character, Point> poi=new HashMap<>(); //{(0,2), 'A'}
+  private Map<Character, Point> poi=new HashMap<>(); 
   private int rows, cols;
 
   WareHouseMap(int[][] arr) {
