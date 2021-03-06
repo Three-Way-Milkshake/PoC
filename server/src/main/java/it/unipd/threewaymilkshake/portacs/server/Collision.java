@@ -16,7 +16,7 @@ import java.util.Map.Entry;
 public class Collision {
 
     static void printCollisionDetected(HashMap<Point, LinkedList<Muletto>> prova) {
-        System.out.println("RILEVATA COLLISIONE: ");
+        if(!prova.isEmpty()) System.out.println("RILEVATA COLLISIONE: ");
         for (HashMap.Entry<Point, LinkedList<Muletto>> entry : prova.entrySet()) {
             System.out.print("(" + entry.getKey().getX() + "," + entry.getKey().getY() + ")" + ": ");
             LinkedList<Muletto> tmp = entry.getValue();

@@ -29,6 +29,7 @@ public class Connection {
     this.socket = socket;
     this.tasks=tasks;
     this.id=++ID_COUNTER;
+    this.pathToNextTask=new LinkedList<>();
     actualPosition=new Point();
     try {
       out = new PrintWriter(socket.getOutputStream(), true);
@@ -108,8 +109,8 @@ public class Connection {
             updatePosition(par); 
             break;
           case "PATH": 
-            // out.print("PATH,"+calculateAndGetPathToNextTask()+";"); 
-            out.print("PATH,TMMMLMMM;"); 
+            out.print("PATH,"+calculateAndGetPathToNextTask()+";"); 
+            // out.print("PATH,TMMMLMMM;"); 
             break;
           default: 
             System.out.println("Unrecognized message: "+par[0]);
@@ -143,16 +144,17 @@ public class Connection {
 
   public LinkedList<Move> getFirstTwoMoves() {
     LinkedList<Move> toReturn = new LinkedList<Move>();
-    // TODO
     if(pathToNextTask.size() > 0) {
-      Character move = pathToNextTask.get(0);
+      // Character move = pathToNextTask.get(0);
+      char move=pathToNextTask.removeFirst();
       toReturn.add(characterToMove(move));
     }
-      if(pathToNextTask.size() > 1) {
-        Character move = pathToNextTask.get(1);
-        toReturn.add(characterToMove(move));
-      }
-
+    if(pathToNextTask.size() > 1) {
+      // Character move = pathToNextTask.get(1);
+      char move=pathToNextTask.getFirst();
+      toReturn.add(characterToMove(move));
+    }
+    return toReturn;
   }
 
   public static Move characterToMove(Character m) {

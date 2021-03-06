@@ -8,6 +8,7 @@ public class Point{
   Point(int x, int y){
     this.x=x;
     this.y=y;
+    this.orientation=Orientation.UP;
   }
 
   Point(int x, int y, Orientation orientation){
@@ -15,7 +16,9 @@ public class Point{
     this.orientation=orientation;
   }
 
-  Point(){}
+  Point(){
+    orientation=Orientation.UP;
+  }
 
   public int getX(){
     return x;

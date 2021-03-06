@@ -23,7 +23,7 @@ public class TestMap {
     };
     WareHouseMap m=new WareHouseMap(arr);
     
-    Deque<Character> l=m.getPath(2, 0, 3, 7, Direction.UP); // T, R, M, M, M, L, M
+    Deque<Character> l=m.getPath(2, 0, 3, 7, Orientation.UP); // T, R, M, M, M, L, M
     String s="";
     for(char c:l)
       s+=c+" ";
@@ -56,7 +56,7 @@ public class TestMap {
     };
 
     WareHouseMap m=new WareHouseMap(arr);
-    String res=m.getPath(new Point(1,0,Direction.DOWN), m.getPOIPosition('b')).toString().replaceAll("(,| |\\[|\\])", "");
+    String res=m.getPath(new Point(1,0,Orientation.DOWN), m.getPOIPosition('b')).toString().replaceAll("(,| |\\[|\\])", "");
     assertEquals("TMRMMRMMLMMRMLMMM", res);
   }
 }

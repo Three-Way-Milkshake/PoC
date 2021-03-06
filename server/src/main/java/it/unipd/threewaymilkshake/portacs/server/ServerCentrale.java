@@ -35,7 +35,7 @@ public class ServerCentrale {
     }*/
 
     public void organizer() {
-        System.out.println("***");
+        // System.out.println("***");
     
 
         generateMatrix(currentMulettos);
@@ -43,18 +43,17 @@ public class ServerCentrale {
         
         HashMap<Point, LinkedList<Muletto>> collisionDetected = Collision.CollisionDetector(new HashSet<Muletto>(currentMulettos));
        
-    
         Collision.printCollisionDetected(collisionDetected);
-
-
         
         Solver solver = new Solver(collisionDetected);
 
         solver.collisionSolver();
         
         solver.printResponse();
+
         
-        System.out.println("***");
+        
+        // System.out.println("***");
         currentMulettos.clear();
     }
 
@@ -67,7 +66,7 @@ public class ServerCentrale {
         }
         
 
-
+        /*
         int[][] map = {
             { 0,0,0,0,0,0,0,0,0,0 },
             { 0,0,0,0,0,0,0,0,0,0 },
@@ -94,7 +93,7 @@ public class ServerCentrale {
             }
             System.out.printf("\n");
         }
-        
+        */
 
     }
 
