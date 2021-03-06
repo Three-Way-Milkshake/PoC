@@ -33,15 +33,14 @@ class Engine implements Runnable {
         }
 
         /********************/
-        LinkedList<Muletto> incomingConnections = new LinkedList<Muletto>();
-        connections.stream().forEach(zzz->{
-          incomingConnections.add(new Muletto(zzz));
-        });
-        /* while (!connections.isEmpty()) {
-            incomingConnections.add(new Muletto(connections.poll()));        
-        } */
-        ServerCentrale serverCentrale = new ServerCentrale(incomingConnections);
-        serverCentrale.organizer();
+        if(!connections.isEmpty()){
+          LinkedList<Muletto> incomingConnections = new LinkedList<Muletto>();
+          connections.stream().forEach(zzz->{
+            incomingConnections.add(new Muletto(zzz));
+          });
+          ServerCentrale serverCentrale = new ServerCentrale(incomingConnections);
+          serverCentrale.organizer();
+        }
         /********************/
 
 

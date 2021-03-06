@@ -37,8 +37,10 @@ public class ServerCentrale {
     public void organizer() {
         // System.out.println("***");
     
-
+        //check if empty
+        
         generateMatrix(currentMulettos);
+        //currentMulettos.getFirst().out.print("STOP,1");
 
         
         HashMap<Point, LinkedList<Muletto>> collisionDetected = Collision.CollisionDetector(new HashSet<Muletto>(currentMulettos));
@@ -47,7 +49,12 @@ public class ServerCentrale {
         
         Solver solver = new Solver(collisionDetected);
 
-        solver.collisionSolver();
+        HashMap<Muletto,Action> responses = solver.collisionSolver();
+        responses.forEach((k, v)->{
+            if(!v.actions.isEmpty()){
+                k.out.print("STOP,1");
+            }
+        });
         
         solver.printResponse();
 

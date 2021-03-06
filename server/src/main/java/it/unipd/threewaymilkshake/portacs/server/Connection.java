@@ -11,10 +11,11 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+
 public class Connection {
   private Socket socket;
   private BufferedReader in;
-  private PrintWriter out;
+  public PrintWriter out;
   private String lastMessage;
   private WareHouseMap map;
   private Deque<Character> tasks;
@@ -158,14 +159,12 @@ public class Connection {
   }
 
   public static Move characterToMove(Character m) {
-    if(m.toString() == ("R"))
-      return Move.TURNRIGHT;
-    else if(m.toString() == "L")
-      return Move.TURNLEFT;
-    else if(m.toString() == "T")
-      return Move.TURNBACK;
-    else // M
-      return Move.GOSTRAIGHT;
+    return switch(m){
+      case 'R' -> Move.TURNRIGHT;
+      case 'L' -> Move.TURNLEFT;
+      case 'T' -> Move.TURNBACK;
+      default -> Move.GOSTRAIGHT;
+    };
   }
 
   public void close() {

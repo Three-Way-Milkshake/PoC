@@ -70,6 +70,7 @@ client.on('data', (data)=>{
             
                 break;
             case "STOP":
+                console.log("Va bene sto fermo");
                 if (cmd[1] == '0') {
                     stopped = true;
                 } else {
