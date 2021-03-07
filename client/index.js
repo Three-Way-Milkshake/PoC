@@ -146,7 +146,12 @@ io.on("connection", (socket) => {
 
     // socket.emit("frecce", "M");
     //socket.emit("mappa", map.getMap());
-    
+    socket.on("updateposition", (data) => {
+        let pos = data.toString().split(",");
+        x = pos[0];
+        y = pos[1];
+        dir = pos[2];
+    });
     
     socket.on("mappa", () => {
         socket.emit("mappa", map.getMap());
