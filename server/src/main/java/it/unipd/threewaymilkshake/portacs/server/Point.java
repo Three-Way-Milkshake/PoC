@@ -47,7 +47,7 @@ public class Point{
 	}
 
   public String toNodeString(){
-    return String.valueOf(","+x+","+y+","+dir);
+    return String.valueOf(","+x+","+y+","+orientation);
   }
 
   public char setNext(int xn, int yn){

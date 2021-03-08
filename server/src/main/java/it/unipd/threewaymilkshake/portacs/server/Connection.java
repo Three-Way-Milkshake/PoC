@@ -80,6 +80,7 @@ public class Connection {
 
   public String calculateAndGetPathToNextTask(){
     char next=tasks.removeFirst();
+    //System.out.println("Looking for "+actualPosition.toNodeString()+" to "+map.getPOIPosition(next));
     pathToNextTask=map.getPath(actualPosition, map.getPOIPosition(next));
     return pathToNextTask.toString().replaceAll("(,| |\\[|\\])", "");
   }
