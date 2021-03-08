@@ -1,6 +1,8 @@
 package it.unipd.threewaymilkshake.portacs.server;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
@@ -16,9 +18,12 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import com.google.gson.Gson;
+
 //import com.google.gson.Gson;
 
 public class Server {
+  private final static String MAP_FILENAME="server/src/main/java/it/unipd/threewaymilkshake/portacs/server/Map.json";
   /*
    * private List<Socket> connections;
    * 
@@ -45,12 +50,12 @@ public class Server {
      * i=0; i<t.length; ++i) System.out.println(t[i]);
      */
 
-    int[][] arr2 = new int[][] { 
+    /* int[][] arr2 = new int[][] { 
       { 1, 1, 1, 1, 1, 0, 0, 1}, 
       { 1, 0, 1, 0, 1, 0, 0, 1 },  
       { 1, 0, 1, 1, 1, 1, 0, 0 },
       { 1, 1, 1, 0, 1, 1, 1, 1} 
-    };
+    }; */
 
     /* char[][] arr = new char[][] { 
       { 'f', 'c', '1', 'd', '1', 'e', '0', '1'}, 
@@ -58,12 +63,25 @@ public class Server {
       { 'h', '0', '1', '1', '1', '1', '0', '0' },
       { 'a', '1', '1', '0', '1', '1', '1', 'b'} 
     }; */
-    char[][] arr = new char[][] { 
+
+    /* char[][] arr = new char[][] { 
       { '1', 'c', '1', 'd', '1', 'e', '0', '1'}, 
       { '1', '0', '1', '0', '1', '0', '0', '1' }, 
       { '1', '0', '1', '1', '1', '1', '0', '0' },
       { '1', '1', '1', '1', '1', '1', '1', 'b'} 
-    };
+    }; */
+
+    Gson gson=new Gson();
+    char[][] arr=null;
+    try{
+      arr=gson.fromJson(new FileReader(MAP_FILENAME), char[][].class);
+    }
+    catch(FileNotFoundException e){
+      System.out.println("The file "+MAP_FILENAME+" does not exist!");
+      e.printStackTrace();
+      System.exit(1);
+    }
+
     WareHouseMap m=new WareHouseMap(arr);
     // m.getPath(2, 0, 3, 7, Direction.UP).forEach(i->System.out.print(i+" "));
     // Arrays.stream(m.toIntMatrix())
@@ -80,8 +98,7 @@ public class Server {
     /* IntStream.range(0,100).forEach(i->{
       tasksLists.add(new LinkedList<>(List.of('f', 'h', 'e')));
     }); */
-    System.out.println("there are: "+tasksLists.size()+" lists");
-    
+    //System.out.println("there are: "+tasksLists.size()+" lists");
     
     ConcurrentLinkedQueue<Connection> connections = new
       ConcurrentLinkedQueue<>(); 
