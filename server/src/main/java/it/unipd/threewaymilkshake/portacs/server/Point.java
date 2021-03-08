@@ -46,6 +46,10 @@ public class Point{
 		return "("+x+","+y+";"+orientation+")";
 	}
 
+  public String toNodeString(){
+    return String.valueOf(","+x+","+y+","+dir);
+  }
+
   public char setNext(int xn, int yn){
     char r='n';
     if(xn<x){

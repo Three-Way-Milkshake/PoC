@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express ();
-const HTTP_PORT = 8080;
+// const HTTP_PORT = 8080;
+const HTTP_PORT = process.argv[3];
 const http = require ("http").createServer();
 const Map = require('./src/test_js/map');
 const Lista = require('./src/test_js/lista');
@@ -11,8 +12,9 @@ const SERVER_PORT = 1723;
 
 const io = require("socket.io")(http, {
     cors: {
-      origin: "http://localhost:4200",
-      methods: ["GET", "POST"]
+    //   origin: "http://localhost:4200",
+        origin: `http://localhost:${process.argv[2]}`,
+        methods: ["GET", "POST"]
     }
 });
 
@@ -145,7 +147,19 @@ io.on("connection", (socket) => {
 
     // socket.emit("frecce", "M");
     //socket.emit("mappa", map.getMap());
-    
+    socket.on("updateposition", (data) => {
+        let pos = data.toString().split(",");
+        x = pos[0];
+        y = pos[1];
+        // dir = pos[2];
+        dir=({
+            N: 0,
+            E: 1,
+            S: 2,
+            O: 3,
+        }) [pos[2]];
+        console.log(dir);
+    });
     
     socket.on("mappa", () => {
         socket.emit("mappa", map.getMap());

@@ -24,6 +24,7 @@ public class Connection {
   private int id;
 
   private  static int ID_COUNTER=0;
+  private boolean manager;
 
   Connection(Socket socket, WareHouseMap map, Deque<Character> tasks) {
     this.map=map;
@@ -36,21 +37,22 @@ public class Connection {
       out = new PrintWriter(socket.getOutputStream(), true);
       in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
       String type=in.readLine();
+      out.print("MAP,");
+      out.print(map.getRows());
+      out.print(',');
+      out.print(map.getColumns());
+      out.print(',');
+      out.print(map.toString()+";");
       if(type.equals("UNIT")){
-  //      int[][] m=map.toIntMatrix();
-        out.print("MAP,");
-        out.print(map.getRows());
-        out.print(',');
-        out.print(map.getColumns());
-        out.print(',');
+        manager=false;
+        // int[][] m=map.toIntMatrix();
+        
         /* Arrays.stream(map.toIntMatrix()).forEach(r->{
           Arrays.stream(r).forEach(i->{
             out.print(i);
           });
         }); */
-        out.print(map.toString()+";");
         out.print("LIST,"+tasks.toString().replaceAll("(,| |\\[|\\])", "")+";");
-        out.println();
         // out.println("HELLO");
         /*
         * out.println("MAP"); Gson g=new Gson(); int[][] arr=new int[3][3];
@@ -59,10 +61,17 @@ public class Connection {
       }
       else{
         //responsabile
+        manager=true;
       }
+
+      out.println();
     } catch (IOException e) {
       e.printStackTrace();
     }
+  }
+
+  public boolean isManager(){
+    return manager;
   }
 
   public Point getPosition(){
@@ -112,6 +121,7 @@ public class Connection {
           case "PATH": 
             out.print("PATH,"+calculateAndGetPathToNextTask()+";"); 
             // out.print("PATH,TMMMLMMM;"); 
+            //out.print("PATH,TMMMLMMM;"); 
             break;
           default: 
             System.out.println("Unrecognized message: "+par[0]);

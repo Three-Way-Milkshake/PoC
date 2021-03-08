@@ -157,6 +157,7 @@ export class MapComponent implements OnInit {
           }
           break;
     }
+    socket.emit("updateposition", "" + this.posX + "," + this.posY + "," + this.dir);
     socket.emit("mappa");
   }
 }
