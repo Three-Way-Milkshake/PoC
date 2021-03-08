@@ -150,7 +150,14 @@ io.on("connection", (socket) => {
         let pos = data.toString().split(",");
         x = pos[0];
         y = pos[1];
-        dir = pos[2];
+        // dir = pos[2];
+        dir=({
+            N: 0,
+            E: 1,
+            S: 2,
+            O: 3,
+        }) [pos[2]];
+        console.log(dir);
     });
     
     socket.on("mappa", () => {

@@ -3,7 +3,6 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { io } from "socket.io-client";
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
-var port = process.argv[3];
 const socket = io("http://127.0.0.1:8080/");
 
 @Component({
@@ -23,7 +22,7 @@ export class FrecciaComponent implements OnInit {
   dir: boolean[] = [false, false, false, false];
 
   constructor(private http : HttpClient, private ngZone: NgZone) {
-    console.log(port);
+    
   }
 
   onNewMessage() {
