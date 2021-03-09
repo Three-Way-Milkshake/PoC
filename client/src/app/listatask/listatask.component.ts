@@ -53,6 +53,7 @@ export class ListataskComponent implements OnInit {
   }
 */
   setValues(data : string) {
+    this.lista = [];
     for (let i = 0; i < data.length; i++) {
       this.lista[i] = data[i];
     }

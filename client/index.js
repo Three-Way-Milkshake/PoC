@@ -57,7 +57,7 @@ client.on('data', (data)=>{
         let cmd = msg[i].split(",");
         switch(cmd[0]){
             case "ALIVE": 
-                client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
+                
                 //io.emit("mappa", map.getMap());
                 
                 break;
@@ -101,11 +101,12 @@ client.on('data', (data)=>{
     }
     if (!stopped) {
         
-        io.emit("frecce", mosse.getMossa());
+        //io.emit("frecce", mosse.getMossa());
+        changePosition(mosse.getMossa());
         //io.emit("mappa", map.getMap());
         
     }
-
+    client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
     client.write('\n', ()=>{
         console.log("response sent");
     });
@@ -197,6 +198,8 @@ io.on("connection", (socket) => {
     
     //task
     socket.on("taskcompletata", () => {
+        lista.removeFirstPOI();
+        io.emit("lista", lista.getLista());
         c.aggiungiComando("PATH");
         c.aggiungiComando("MAP"); 
     });
@@ -207,3 +210,46 @@ io.on("connection", (socket) => {
 http.listen(HTTP_PORT, () => {
     console.log("server is listening" + HTTP_PORT);
 })
+
+function changePosition(mossa){
+    console.log(mossa);
+    switch(mossa) {
+      case "R":
+        if      (dir == 0) dir = 1;
+        else if (dir == 3) dir = 0;
+        else if (dir == 2) dir = 3;
+        else if (dir == 1) dir = 2;
+        
+
+        break;
+        case "L":
+          if      (dir == 0) dir = 3;
+          else if (dir == 3) dir = 2;
+          else if (dir == 2) dir = 1;
+          else if (dir == 1) dir = 0;
+          
+          break;
+        case "T":
+          if      (dir == 0) dir = 2;
+          else if (dir == 3) dir = 1;
+          else if (dir == 2) dir = 0;
+          else if (dir == 1) dir = 3;
+          
+          break;
+        case "S":
+          //fermo non fa niente
+          break;
+        case "M":
+          if        (dir == 0) { 
+            y--;
+          } else if (dir == 2) {
+            y++;
+          } else if (dir == 1) {
+            x++;
+          } else if (dir == 3) {
+            x--;
+          }
+          break;
+    }
+    io.emit("frecce", x+","+y+","+dir);
+}

@@ -124,6 +124,7 @@ export class MapComponent implements OnInit {
 
   changePosition(mossa : string){
     console.log(mossa);
+    /*
     switch(mossa) {
       case "R":
         if      (this.dir == 'N') this.dir = 'E';
@@ -162,7 +163,20 @@ export class MapComponent implements OnInit {
           }
           break;
     }
-    socket.emit("updateposition", "" + this.posX + "," + this.posY + "," + this.dir);
+    */
+    //socket.emit("updateposition", "" + this.posX + "," + this.posY + "," + this.dir);
+    let sss : string[] = mossa.toString().split(",");
+    this.posX = parseInt(sss[0]);
+    this.posY = parseInt(sss[1]);    
+    if (sss[2] == "0") {
+      this.dir = "N";
+    } else if (sss[2] == "1") {
+      this.dir = "E";
+    } else if (sss[2] == "2") {
+      this.dir = "S";
+    } else {
+      this.dir = "O";
+    }
     socket.emit("mappa");
   }
 }
