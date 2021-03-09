@@ -2,6 +2,11 @@
 Proof of Concept - PORTACS
 
 # Running
+## Needed
+- jdk >=14
+- node >= 12.16.3
+- npm >= 7.6
+- angular gli >= 11.2.1
 ## Server
 - cd in [server](./server) folder
 - run `./gradlew run`
