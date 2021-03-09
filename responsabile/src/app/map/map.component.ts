@@ -4,7 +4,7 @@ import { io } from "socket.io-client";
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 
-const socket = io("http://127.0.0.1:8080/");
+const socket = io("http://127.0.0.1:8090/");
 
 
 @Component({

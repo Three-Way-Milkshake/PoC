@@ -23,7 +23,8 @@ let mosse = new Listamosse();
 let lista = new Lista();
 
 //da modificare x, y, dir
-let x = 0, y = 0, dir = 0;
+// let x = 0, y = 0, dir = 0;
+let x = process.argv[4], y = process.argv[5], dir = 2;
 let stopped = false;
 /*
 dir:

@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express ();
-const HTTP_PORT = 8080;
+const HTTP_PORT = 8090;
 const http = require ("http").createServer();
 const Map = require('./src/test_js/map');
 const net = require('net');
@@ -8,7 +8,7 @@ const SERVER_PORT = 1723;
 
 const io = require("socket.io")(http, {
     cors: {
-      origin: "http://localhost:4200",
+      origin: `http://localhost:${process.argv[2]}`,
       methods: ["GET", "POST"]
     }
 });

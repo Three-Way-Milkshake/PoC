@@ -62,6 +62,30 @@
                   "maximumError": "4kb"
                 }
               ]
+            },
+            "dev1":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev1.ts"
+                }
+              ]
+            },
+            "dev2":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev2.ts"
+                }
+              ]
+            },
+            "dev3":{
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.dev3.ts"
+                }
+              ]
             }
           }
         },
@@ -73,6 +97,15 @@
           "configurations": {
             "production": {
               "browserTarget": "muletto:build:production"
+            },
+            "dev1": {
+              "browserTarget": "muletto:build:dev1"
+            },
+            "dev2": {
+              "browserTarget": "muletto:build:dev2"
+            },
+            "dev3": {
+              "browserTarget": "muletto:build:dev3"
             }
           }
         },

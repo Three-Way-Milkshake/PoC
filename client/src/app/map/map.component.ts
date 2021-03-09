@@ -4,8 +4,10 @@ import { MapService } from './../map.service';
 import { io } from "socket.io-client";
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
+import { environment } from './../../environments/environment';
 
-const socket = io("http://127.0.0.1:8080/");
+// const socket = io(`http://127.0.0.1:8080/`);
+const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
 
 
 @Component({
@@ -15,10 +17,13 @@ const socket = io("http://127.0.0.1:8080/");
 })
 export class MapComponent implements OnInit {
   map : string = '';
-  posX : number = 0;
-  posY : number = 0;
+  // posX : number = 0;
+  // posY : number = 0;
+  posX : number = environment.x;
+  posY : number = environment.y;
   dir : string = 'N'
   constructor(private service : MapService, private http: HttpClient, private ngZone: NgZone) {
+    // console.log(environment.socketio_port);
     
   }
 

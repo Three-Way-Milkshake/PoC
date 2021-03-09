@@ -3,7 +3,8 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { io } from "socket.io-client";
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
-const socket = io("http://127.0.0.1:8080/");
+import { environment } from './../../environments/environment';
+const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
 
 @Component({
   selector: 'app-freccia',

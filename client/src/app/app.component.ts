@@ -1,8 +1,9 @@
 import { FrecciaComponent } from './freccia/freccia.component';
 import { Component } from '@angular/core';
 import { io } from "socket.io-client";
+import { environment } from './../environments/environment';
 
-const socket = io("http://127.0.0.1:8080/");
+const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent {
   title = 'muletto';
   automatica : boolean = true; // cosa diverrà
   guida : string = 'manuale';
+  
 
   cambio() {
     if (this.automatica) {
