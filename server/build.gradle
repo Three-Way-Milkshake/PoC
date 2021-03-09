@@ -1,8 +1,17 @@
-/* groovylint-disable-next-line CompileStatic */
+ /* groovylint-disable-next-line CompileStatic */
 apply plugin: 'java'
+// sourceCompatibility = 1.12
+// targetCompatibility = 1.12
+
 apply plugin: 'application'
 
-// mainClassName = 'it.unipd.threewaymilkshake.portacs.server.Server'
+java {
+    sourceCompatibility = JavaVersion.toVersion('14')
+    targetCompatibility = JavaVersion.toVersion('14')
+}
+
+
+mainClassName = 'it.unipd.threewaymilkshake.portacs.server.Server'
 
 repositories {
     mavenCentral()

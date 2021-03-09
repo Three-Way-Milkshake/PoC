@@ -23,7 +23,7 @@ import com.google.gson.Gson;
 //import com.google.gson.Gson;
 
 public class Server {
-  private final static String MAP_FILENAME="server/src/main/java/it/unipd/threewaymilkshake/portacs/server/Map.json";
+  private final static String MAP_FILENAME="src/main/java/it/unipd/threewaymilkshake/portacs/server/Map.json";
   /*
    * private List<Socket> connections;
    * 

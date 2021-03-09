@@ -1,7 +1,7 @@
 package it.unipd.threewaymilkshake.portacs.server;
 import com.google.gson.annotations.SerializedName;
 
-enum CellType {
+/* enum CellType {
 	@SerializedName("0")
 	OBSTACLE,
 
@@ -23,7 +23,7 @@ enum CellType {
 	@SerializedName("6")
 	NEUTRAL
 	
-};
+}; */
 
 public class Cell {
     CellType type;
