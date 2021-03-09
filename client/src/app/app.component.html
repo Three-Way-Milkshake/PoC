@@ -1,0 +1,34 @@
+<div class="total">
+    <h1>Benvenuto nel tuo muletto</h1>   
+    
+        
+    <div class = "listaTask">
+        <app-listatask></app-listatask>
+    </div>
+    <div class = "base">
+        <app-comeback></app-comeback>
+    </div>
+    
+    <div class = "mappa">
+        <app-map></app-map>
+    </div>
+
+    <button class="cambioguida" (click)="cambio()">Metti in guida {{guida}}</button>
+
+    <div class="guida">
+    <div *ngIf="automatica; else manuale">
+        <div class="freccia">
+            <app-freccia></app-freccia>
+        </div>
+    </div>
+    <ng-template #manuale>
+        <div class="manuale">
+            <app-guidamanuale></app-guidamanuale>
+        </div>
+    </ng-template>
+    </div>
+    
+    
+
+</div>
+
