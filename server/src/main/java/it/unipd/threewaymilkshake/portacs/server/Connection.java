@@ -90,9 +90,10 @@ public class Connection {
   }
 
   public void updatePosition(String[] par){
+    /* swapped x, y to try fix swapping problem in client */
     updatePosition(
-      Integer.parseInt(par[1]), 
       Integer.parseInt(par[2]),
+      Integer.parseInt(par[1]), 
       Orientation.values()[Integer.parseInt(par[3])]
     );
   }

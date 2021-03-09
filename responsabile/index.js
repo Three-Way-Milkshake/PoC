@@ -41,6 +41,7 @@ client.on('data', (data)=>{
     let msg=data.toString().split(";");
     for (let i = 0; i < msg.length; i++) {
         let cmd = msg[i].split(",");
+        console.log(cmd);
         switch(cmd[0]){
             case "MAP":
                 

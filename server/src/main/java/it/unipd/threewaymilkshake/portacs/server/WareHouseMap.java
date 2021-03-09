@@ -90,8 +90,8 @@ class WareHouseMap {
 
   public Deque<Character> getPath(Point start, Point end){
     System.out.println("From: "+start.toNodeString()+" to "+end.toNodeString());
-    // return getPath(start.getX(), start.getY(), end.getX(), end.getY(), start.getOrientation());
-    return getPath(start.getY(), start.getX(), end.getX(), end.getY(), start.getOrientation()); //TODO fix coordinate storte
+    return getPath(start.getX(), start.getY(), end.getX(), end.getY(), start.getOrientation());
+    // return getPath(start.getY(), start.getX(), end.getX(), end.getY(), start.getOrientation()); //TODO fix coordinate storte
   }
 
   public Deque<Character> getPath(int startX, int startY, int endX, int endY, Orientation dir) {
