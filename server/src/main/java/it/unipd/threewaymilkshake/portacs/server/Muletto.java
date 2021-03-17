@@ -58,6 +58,10 @@ public class Muletto {
 
     Move getMove(Integer i) {
         if(nextMoves.isEmpty()) return Move.STOP;
-        return nextMoves.get(i);
+        try{
+            return nextMoves.get(i);
+        } catch(IndexOutOfBoundsException e){
+            return Move.STOP;
+        }
     }
 }

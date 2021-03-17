@@ -24,7 +24,7 @@ let lista = new Lista();
 
 //da modificare x, y, dir
 // let x = 0, y = 0, dir = 0;
-let x = process.argv[4], y = process.argv[5], dir = 2;
+let x = process.argv[4], y = process.argv[5], dir = 0;
 let stopped = false;
 /*
 dir:
@@ -74,11 +74,12 @@ client.on('data', (data)=>{
                 break;
             case "STOP":
                 console.log("Va bene sto fermo");
-                if (cmd[1] == '0') {
+                if (cmd[1] === '0') {
                     stopped = true;
                 } else {
-                    for (let k = 0; k < cmd[1]; k++) {
+                    for (let k = 0; k < parseInt(cmd[1]); k++) {
                         mosse.aggiungiMossa('S');
+                        console.log("INSERISCO STOOOOOOP");
                     }
                 }
                 break;

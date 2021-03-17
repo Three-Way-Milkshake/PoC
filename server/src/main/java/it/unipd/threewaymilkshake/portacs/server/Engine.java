@@ -44,14 +44,14 @@ class Engine implements Runnable {
 
         //TODO: commented because broken
         /********************/
-        /* if(!connections.isEmpty()){
+        if(!connections.isEmpty()){
           LinkedList<Muletto> incomingConnections = new LinkedList<Muletto>();
           connections.stream().filter(conn->!conn.isManager()).forEach(zzz->{
             incomingConnections.add(new Muletto(zzz));
           });
           ServerCentrale serverCentrale = new ServerCentrale(incomingConnections);
           serverCentrale.organizer();
-        } */
+        }
         /********************/
 
 
@@ -62,7 +62,7 @@ class Engine implements Runnable {
       }
 
       try {
-        Thread.sleep(1000);
+        Thread.sleep(2000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
