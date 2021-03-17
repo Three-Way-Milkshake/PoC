@@ -212,7 +212,6 @@ http.listen(HTTP_PORT, () => {
 })
 
 function changePosition(mossa){
-    console.log(mossa);
     switch(mossa) {
       case "R":
         if      (dir == 0) dir = 1;
@@ -251,5 +250,6 @@ function changePosition(mossa){
           }
           break;
     }
-    io.emit("frecce", x+","+y+","+dir);
+    io.emit("updatemap", x+","+y+","+dir);
+    io.emit("frecce", mossa);
 }

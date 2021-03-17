@@ -56,7 +56,7 @@ export class MapComponent implements OnInit {
 
   onNewMossa(){
     return new Observable(observer => {
-      socket.on('frecce', (msg: string) => {
+      socket.on('updatemap', (msg: string) => {
         observer.next(msg);
       });
     });
