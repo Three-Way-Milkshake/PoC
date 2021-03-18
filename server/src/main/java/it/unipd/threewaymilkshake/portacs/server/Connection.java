@@ -157,14 +157,16 @@ public class Connection {
 
   public LinkedList<Move> getFirstTwoMoves() {
     LinkedList<Move> toReturn = new LinkedList<Move>();
-    if(pathToNextTask.size() > 0) {
+    if(pathToNextTask.size() > 1) {
       // Character move = pathToNextTask.get(0);
       char move=pathToNextTask.removeFirst();
       toReturn.add(characterToMove(move));
+      move = pathToNextTask.getFirst();
+      toReturn.add(characterToMove(move));
     }
-    if(pathToNextTask.size() > 1) {
+    else if(pathToNextTask.size() == 1) {
       // Character move = pathToNextTask.get(1);
-      char move=pathToNextTask.getFirst();
+      char move=pathToNextTask.removeFirst();
       toReturn.add(characterToMove(move));
     }
     return toReturn;

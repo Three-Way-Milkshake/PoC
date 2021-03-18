@@ -28,7 +28,7 @@ public class Unit {
         return actualPosition.goIntoNewPosition(moves.removeFirst());
     }
 
-    public LinkedList<Move> getFirstTwoMoves() {
+    /*public LinkedList<Move> getFirstTwoMoves() {
         LinkedList<Move> toReturn = new LinkedList<Move>();
         if(moves.size() >= 2) {
             toReturn.add(moves.get(0));
@@ -39,7 +39,7 @@ public class Unit {
                 
         }
         return toReturn;
-    }
+    }*/
 
     
 

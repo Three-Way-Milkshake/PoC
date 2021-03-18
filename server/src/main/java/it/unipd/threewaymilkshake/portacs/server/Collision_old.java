@@ -13,9 +13,10 @@ import java.util.Set;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class Collision {
+public class Collision_old {
+
     static void printCollisionDetected(HashMap<Point, LinkedList<Muletto>> prova) {
-        if(!prova.isEmpty()) System.out.println("+++RILEVATA COLLISIONE+++");
+        if(!prova.isEmpty()) System.out.println("RILEVATA COLLISIONE: ");
         for (HashMap.Entry<Point, LinkedList<Muletto>> entry : prova.entrySet()) {
             System.out.print("(" + entry.getKey().getX() + "," + entry.getKey().getY() + ")" + ": ");
             LinkedList<Muletto> tmp = entry.getValue();
@@ -26,8 +27,10 @@ public class Collision {
             System.out.println();
         }
     }
+
     static HashMap<Point, LinkedList<Muletto>> CollisionDetector(HashSet<Muletto> muletti) {
         HashMap<Point, HashSet<Muletto>> tmp = new HashMap<Point, HashSet<Muletto>>();
+
         for (Muletto e1 : muletti) {
             for (Muletto e2 : muletti) {
                 if (e1.id < e2.id) {
@@ -38,74 +41,79 @@ public class Collision {
                     // pos prossime mosse
                     Point pos1m1 = e1.position.TellNewPosition(e1.getMove(0));
                     Point pos1m2 = e1.position.Tell2NewPosition(e1.getMove(1), pos1m1);
-                    Point pos2m1 = e2.position.TellNewPosition(e2.getMove(0));
-                    Point pos2m2 = e2.position.Tell2NewPosition(e2.getMove(1), pos2m1);
-                    /* Point pos1m1=new Point(e1.getMove(0));
-                    Point pos1m2=new Point(e1.getMove(1));
-                    Point pos2m1=new Point(e2.getMove(0));
-                    Point pos2m2=new Point(e2.getMove(1)); */
 
-                    System.out.println("====COLLISION DETECTOR====");
-                    System.out.println("Posizioni: "+pos1.printPosition()+" ; "+pos2.printPosition());
-                    System.out.println("Mosse: ["+pos1m1.printPosition()+","+pos1m2.printPosition()+"]  ["+pos2m1.printPosition()+","+pos2m2.printPosition()+"]");
-                    System.out.println("====END COLLISION DETECTOR====");
+                    Point pos2m1 = e2.position.TellNewPosition(e2.getMove(0));
+
+                    Point pos2m2 = e2.position.Tell2NewPosition(e2.getMove(1), pos2m1);
+
                     if (pos1.equals(pos2)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1, s);
                     }
                     if (pos1.equals(pos2m1)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1, s);
                     }
                     if (pos1.equals(pos2m2)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1, s);
                     }
                     if (pos1m1.equals(pos2)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1m1, s);
                     }
                     if (pos1m1.equals(pos2m1)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1m1, s);
                     }
                     if (pos1m1.equals(pos2m2)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1m1, s);
                     }
                     if (pos1m2.equals(pos2)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1m2, s);
                     }
                     if (pos1m2.equals(pos2m1)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1m2, s);
                     }
                     if (pos1m2.equals(pos2m2)) {
+
                         mul.add(e1);
                         mul.add(e2);
                         HashSet<Muletto> s = new HashSet<Muletto>(mul);
                         tmp.put(pos1m2, s);
                     }
                 }
+
             }
         }
+
         for (HashMap.Entry<Point, HashSet<Muletto>> entry1 : tmp.entrySet()) {
             for (HashMap.Entry<Point, HashSet<Muletto>> entry2 : tmp.entrySet()) {
                 if ((entry1.getKey() != entry2.getKey()) && (entry1.getKey().getX() == entry2.getKey().getX())
@@ -122,6 +130,7 @@ public class Collision {
                 }
             }
         }
+
         /*
          * for (HashMap.Entry<Point, HashSet<Muletto>> entry : tmp.entrySet()) { for
          * (Muletto temp0 : entry.getValue()) { for (Muletto temp1 :
@@ -134,10 +143,12 @@ public class Collision {
             if (pair.getValue().isEmpty())
                 it.remove(); // avoids a ConcurrentModificationException
         }
+
         HashMap<Point, LinkedList<Muletto>> finale = new HashMap<Point, LinkedList<Muletto>>();
         for (HashMap.Entry<Point, HashSet<Muletto>> entry1 : tmp.entrySet()) {
             LinkedList<Muletto> s = new LinkedList<Muletto>(entry1.getValue());
             finale.put(entry1.getKey(), s);
+
         }
         return finale;
     }

@@ -26,6 +26,7 @@ class Engine implements Runnable {
   public void run() {
     while (true) {
       if (!connections.isEmpty()) {
+        
         for (Connection c : connections) {
           if(!c.isManager()){
               c.send("ALIVE");
@@ -52,7 +53,7 @@ class Engine implements Runnable {
           ServerCentrale serverCentrale = new ServerCentrale(incomingConnections);
           serverCentrale.organizer();
         }
-        /********************/
+        /********************/        
 
 
         sendAllPositionsToManagers();
@@ -62,7 +63,7 @@ class Engine implements Runnable {
       }
 
       try {
-        Thread.sleep(2000);
+        Thread.sleep(10000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }

@@ -16,6 +16,10 @@ public class Point{
     this.orientation=orientation;
   }
 
+  /* Point(Move m){
+
+  } */
+
   Point(){
     orientation=Orientation.UP;
   }
@@ -207,8 +211,44 @@ public class Point{
     }
 
     public Point TellNewPosition(Move move) {
+      return switch(move){
+        case GOSTRAIGHT -> {
+          yield switch(orientation){
+            case UP -> new Point((x-1), y, orientation);
+            case RIGHT -> new Point(x, y+1, orientation);
+            case DOWN -> new Point(x+1, y, orientation);
+            case LEFT -> new Point(x, y-1, orientation);
+          };
+        }
 
-        if (move == Move.GOSTRAIGHT) {
+        case TURNLEFT -> {
+          yield switch(orientation){
+            case UP -> new Point(x, y, Orientation.LEFT);
+            case RIGHT -> new Point(x, y, Orientation.UP);
+            case DOWN -> new Point(x, y, Orientation.RIGHT);
+            case LEFT -> new Point(x, y, Orientation.DOWN);
+          };
+        }
+        case TURNRIGHT -> {
+          yield switch(orientation){
+            case UP -> new Point(x, y, Orientation.RIGHT);
+            case RIGHT -> new Point(x, y, Orientation.DOWN);
+            case DOWN -> new Point(x, y, Orientation.LEFT);
+            case LEFT -> new Point(x, y, Orientation.UP);
+          };
+        }
+        case TURNBACK -> {
+          yield switch(orientation){
+            case UP -> new Point(x, y, Orientation.DOWN);
+            case RIGHT -> new Point(x, y, Orientation.LEFT);
+            case DOWN -> new Point(x, y, Orientation.UP);
+            case LEFT -> new Point(x, y, Orientation.RIGHT);
+          };
+        }
+        case STOP -> new Point (x,y,orientation);
+      };
+
+        /* if (move == Move.GOSTRAIGHT) {
             if (this.orientation == Orientation.UP)
                 return new Point((x - 1), y, orientation);
             else if (this.orientation == Orientation.DOWN)
@@ -221,11 +261,11 @@ public class Point{
             if (this.orientation == Orientation.UP)
                 return new Point(x, y, Orientation.LEFT);
             else if (this.orientation == Orientation.DOWN)
-                return new Point(x, y, Orientation.LEFT);
+                return new Point(x, y, Orientation.RIGHT);
             else if (this.orientation == Orientation.LEFT)
-                return new Point(x, y, Orientation.LEFT);
+                return new Point(x, y, Orientation.UP);
             else // right
-                return new Point(x, y, Orientation.LEFT);
+                return new Point(x, y, Orientation.DOWN);
         } else if (move == Move.TURNRIGHT) {
             return new Point(x, y, Orientation.RIGHT);
 
@@ -240,12 +280,13 @@ public class Point{
             else // right
                 return new Point(x, y, Orientation.LEFT);
         }
-        return new Point(0, 0, Orientation.DOWN);
+        return new Point(0, 0, Orientation.DOWN); */
     }
 
     public Point Tell2NewPosition(Move move, Point p) {
+      return p.TellNewPosition(move);
 
-        if (move == Move.GOSTRAIGHT) {
+        /* if (move == Move.GOSTRAIGHT) {
             if (p.orientation == Orientation.UP)
                 return new Point((p.x - 1), p.y, p.orientation);
             else if (p.orientation == Orientation.DOWN)
@@ -277,7 +318,7 @@ public class Point{
             else // right
                 return new Point(p.x, p.y, Orientation.LEFT);
         }
-        return new Point(0, 0, Orientation.DOWN);
+        return new Point(0, 0, Orientation.DOWN); */
     }
 
 

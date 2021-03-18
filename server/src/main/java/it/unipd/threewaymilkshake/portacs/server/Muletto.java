@@ -15,7 +15,7 @@ public class Muletto {
         this.id = con.getId();
         this.position = con.getPosition();
         this.nextMoves = con.getFirstTwoMoves();
-        this.out=con.out;
+        this.out = con.out;
     }
 
 

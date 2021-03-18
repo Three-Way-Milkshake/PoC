@@ -251,3 +251,4 @@ gradle-app.setting
 
 # End of https://www.toptal.com/developers/gitignore/api/java,gradle,vscode,macos,node,angular
 server/bin/main/it/unipd/threewaymilkshake/portacs/server/Map.json
+server/.settings/org.eclipse.buildship.core.prefs
