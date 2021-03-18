@@ -10,9 +10,12 @@ class Listamosse {
             this.mosse.push(seq[i]);
         }
     }
+    
+    isEmpty() {
+        return (this.mosse.length == 0 || this.mosse === undefined);
+    }
 
     getMossa() {
-        //console.log(this.mosse);
         return this.mosse.shift();
     }
 

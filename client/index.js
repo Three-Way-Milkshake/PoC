@@ -26,6 +26,8 @@ let lista = new Lista();
 // let x = 0, y = 0, dir = 0;
 let x = process.argv[4], y = process.argv[5], dir = 2;
 let stopped = false;
+let canCheck = false;
+let requestButton = false;
 /*
 dir:
 0 = su
@@ -68,6 +70,7 @@ client.on('data', (data)=>{
                 
                 break;
             case "PATH":
+                canCheck = true;
                 mosse.createMosse(cmd[1]);
                 console.log("PATH"+cmd[1]);
             
@@ -77,7 +80,7 @@ client.on('data', (data)=>{
                 if (cmd[1] == '0') {
                     stopped = true;
                 } else {
-                    for (let k = 0; k < cmd[1]; k++) {
+                    for (let k = 0; k < parseInt(cmd[1]); k++) {
                         mosse.aggiungiMossa('S');
                     }
                 }
@@ -90,9 +93,6 @@ client.on('data', (data)=>{
                     lista.addPOI(cmd[1][i]);
                 }
                 io.emit("lista", lista.getLista());
-                /* io.on("connection", (socket) => {
-                    socket.emit("lista", lista.getLista());
-                }); */
 
                 break;     
             default: 
@@ -100,12 +100,26 @@ client.on('data', (data)=>{
         }
     }
     if (!stopped) {
-        
-        //io.emit("frecce", mosse.getMossa());
         changePosition(mosse.getMossa());
-        //io.emit("mappa", map.getMap());
+    }
+    if (mosse.isEmpty() && canCheck) {
+        io.emit("pulsante");
+        canCheck = false;
+    }
+    /*
+    if (!requestButton) {
+        console.log("chiedo di mostrare il pulsante");
+        io.emit("pulsante", "1");
+    }
+    */
+    /*
+    if (mosse.isEmpty() && !alreadyChecked) {
+        alreadyChecked = true;
+        io.emit("pulsante");
+        console.log("ti prego funziona.mp4 il pulsante");
         
     }
+    */
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
     client.write('\n', ()=>{
         console.log("response sent");
@@ -139,21 +153,15 @@ function onErr(err) {
 
 
 io.on("connection", (socket) => {
-    socket.emit("pulsante");
-    console.log("mostra il pulsante");
+    //console.log("mostra il pulsante");
     // socket.emit("mappa", map.getMap());
     socket.emit("lista", lista.getLista());
-    // console.log("connected someone");
-    //}, 10000, socket);
     
-
-    // socket.emit("frecce", "M");
-    //socket.emit("mappa", map.getMap());
+    
     socket.on("updateposition", (data) => {
         let pos = data.toString().split(",");
         x = pos[0];
         y = pos[1];
-        // dir = pos[2];
         dir=({
             N: 0,
             E: 1,
@@ -239,7 +247,7 @@ function changePosition(mossa){
           //fermo non fa niente
           break;
         case "M":
-          if        (dir == 0) { 
+          if        (dir == 0) {
             y--;
           } else if (dir == 2) {
             y++;

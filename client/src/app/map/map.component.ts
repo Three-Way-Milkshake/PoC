@@ -23,7 +23,6 @@ export class MapComponent implements OnInit {
   posY : number = environment.y;
   dir : string = 'N'
   constructor(private service : MapService, private http: HttpClient, private ngZone: NgZone) {
-    // console.log(environment.socketio_port);
     
   }
 
@@ -31,7 +30,6 @@ export class MapComponent implements OnInit {
     //this.getValues();
     this.onNewMossa().subscribe((data) =>{
       this.ngZone.run(() => {
-        //console.log('ciao '+data);
         this.changePosition(String(data));
         
       }); 
@@ -116,14 +114,11 @@ export class MapComponent implements OnInit {
       }
       i++; 
     }
-    console.log(arr);
     arr[this.posY][this.posX] = "Z"; //metto il muletto nella mappa 
-    console.log("muletto: "+arr[this.posY][this.posX]+", posX:"+this.posX + ", posY:"+this.posY);
     this.map = this.getMap(arr);
   }
 
   changePosition(mossa : string){
-    console.log(mossa);
     /*
     switch(mossa) {
       case "R":

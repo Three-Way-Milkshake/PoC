@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { io } from "socket.io-client";
-import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
-import { environment } from './../../environments/environment';
+import { ListataskService } from './../listatask.service'
+//import { environment } from './../../environments/environment';
 
-const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
+
 
 @Component({
   selector: 'app-listatask',
@@ -14,44 +13,34 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
 })
 export class ListataskComponent implements OnInit {
   showButton : boolean = false;
-  //lista : string = '';
   lista : string [] = [];
 
-  constructor(private http: HttpClient, private ngZone: NgZone) {
-    socket.on("pulsante", () => {
-      this.showButton = true;
-    });
-  }
+  constructor(private http: HttpClient, private service: ListataskService, private ngZone: NgZone) {}
 
   ngOnInit() {
-    this.onNewMessage().subscribe((data) => {
+    //update list
+    this.service.onNewList().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
       });      
     });
+    //show button
+    this.service.onGetButton().subscribe( () =>{
+      this.ngZone.run(() => {
+        console.log("mostro il pulsante di task");
+        this.showButton = true;
+      })
+    })
   }
 
+  
   taskCompletata() {
-    socket.emit("taskcompletata");
+    this.service.doneTask();
+    this.showButton = false;
   }
 
-  onNewMessage() {
-    return new Observable(observer => {
-      socket.on('lista', (msg: string) => {
-        observer.next(msg);
-      });
-    });
-  }
-/*
-  setValues(data : string) {
-    this.lista = '<ol>';
-    let i = 0;
-    for (let i = 0; i < data.length; i++) {
-      this.lista += '<li>' + data[i] + '</li>';
-    }
-    this.lista += '</ol>';
-  }
-*/
+  
+
   setValues(data : string) {
     this.lista = [];
     for (let i = 0; i < data.length; i++) {
