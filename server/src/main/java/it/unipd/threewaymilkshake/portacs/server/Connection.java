@@ -75,6 +75,7 @@ public class Connection {
   }
 
   public Point getPosition(){
+    //return new Point(actualPosition.getX(),actualPosition.getY(),actualPosition.getOrientation());
     return actualPosition;
   }
 

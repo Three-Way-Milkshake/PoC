@@ -107,9 +107,11 @@ client.on('data', (data)=>{
         //io.emit("mappa", map.getMap());
         
     }
+    
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
     client.write('\n', ()=>{
-        console.log("response sent");
+        console.log("response sent" + " POS, (" + y + "," + x + ") ," + dir);
+    
     });
     
 });

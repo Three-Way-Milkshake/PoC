@@ -246,9 +246,12 @@ public class Point{
           };
         }
         case STOP -> new Point (x,y,orientation);
-      };
-
-        /* if (move == Move.GOSTRAIGHT) {
+      };/*
+         if(move == null) {
+           System.out.println("POSITION IS NULL");
+           return null;
+         }
+         else if (move == Move.GOSTRAIGHT) {
             if (this.orientation == Orientation.UP)
                 return new Point((x - 1), y, orientation);
             else if (this.orientation == Orientation.DOWN)
@@ -285,8 +288,11 @@ public class Point{
 
     public Point Tell2NewPosition(Move move, Point p) {
       return p.TellNewPosition(move);
-
-        /* if (move == Move.GOSTRAIGHT) {
+         /*if(move == null) {
+           System.out.println("POSITION IS NULL");
+           return null;
+         }
+         else if (move == Move.GOSTRAIGHT) {
             if (p.orientation == Orientation.UP)
                 return new Point((p.x - 1), p.y, p.orientation);
             else if (p.orientation == Orientation.DOWN)

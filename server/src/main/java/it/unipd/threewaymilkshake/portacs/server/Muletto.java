@@ -10,7 +10,7 @@ public class Muletto {
     public Point position;
     LinkedList<Move> nextMoves;
     public PrintWriter out;
-
+    
     public Muletto(Connection con) {
         this.id = con.getId();
         this.position = con.getPosition();
