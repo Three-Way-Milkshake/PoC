@@ -175,30 +175,14 @@ public class Connection {
     LinkedList<Move> toReturn = new LinkedList<Move>();
     if(pathToNextTask.size() > 1) {
       // Character move = pathToNextTask.get(0);
-      char move = pathToNextTask.getFirst();
-      if(move == 'S') {
-        System.out.println("STOP SIGNAL!!");
-        int i = 0;
-        for(; i < pathToNextTask.size(); i++) {
-          pathToNextTask.remove(i);
-          if(pathToNextTask.get(i) != 'S') {
-            break;
-          }
-        }
-        toReturn.add(characterToMove(pathToNextTask.get(i)));
-        toReturn.add(characterToMove(pathToNextTask.get(i+1)));
-      }
-      else {
-        pathToNextTask.removeFirst();
-        toReturn.add(characterToMove(move));
-        move = pathToNextTask.getFirst();
-        toReturn.add(characterToMove(move));
-      }
-      
+      char move=pathToNextTask.removeFirst();
+      toReturn.add(characterToMove(move));
+      move = pathToNextTask.removeFirst();
+      toReturn.add(characterToMove(move));
     }
     else if(pathToNextTask.size() == 1) {
       // Character move = pathToNextTask.get(1);
-      char move=pathToNextTask.getFirst();
+      char move=pathToNextTask.removeFirst();
       toReturn.add(characterToMove(move));
     }
     return toReturn;
