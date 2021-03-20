@@ -90,9 +90,9 @@ public class Server {
     //   });
 
     Deque<Deque<Character>> tasksLists=new LinkedList<>();
-    // tasksLists.add(new LinkedList<>(List.of('a', 'b', 'c')));
-    // tasksLists.add(new LinkedList<>(List.of('d', 'e', 'f')));
-    // tasksLists.add(new LinkedList<>(List.of('b', 'a', 'd')));
+    tasksLists.add(new LinkedList<>(List.of('a', 'b', 'c')));
+    tasksLists.add(new LinkedList<>(List.of('d', 'e', 'f')));
+    tasksLists.add(new LinkedList<>(List.of('b', 'a', 'd')));
     IntStream.range(0,100).forEach(i->{
       tasksLists.add(new LinkedList<>(List.of('d', 'b', 'c')));
     });
