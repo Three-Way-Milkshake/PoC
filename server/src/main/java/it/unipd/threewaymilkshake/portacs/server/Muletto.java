@@ -1,6 +1,7 @@
 package it.unipd.threewaymilkshake.portacs.server;
 
 import java.io.PrintWriter;
+import java.util.Deque;
 import java.util.LinkedList;
 
 enum Move{TURNLEFT,TURNRIGHT,GOSTRAIGHT,TURNBACK,STOP}
@@ -9,12 +10,14 @@ public class Muletto {
     public int id;
     public Point position;
     LinkedList<Move> nextMoves;
+    Deque<Character> pathToNextTask;
     public PrintWriter out;
     
     public Muletto(Connection con) {
         this.id = con.getId();
         this.position = con.getPosition();
         this.nextMoves = con.getFirstTwoMoves();
+        this.pathToNextTask = con.pathToNextTask;
         this.out = con.out;
     }
 
@@ -28,6 +31,10 @@ public class Muletto {
         this.id = id;
         this.position = position;
         this.nextMoves = nextMoves;
+    }
+
+    public int getID() {
+        return id;
     }
 
     @Override

@@ -19,7 +19,7 @@ public class Connection {
   private String lastMessage;
   private WareHouseMap map;
   private Deque<Character> tasks;
-  private Deque<Character> pathToNextTask;
+  public Deque<Character> pathToNextTask;
   private Point actualPosition;
   private int id;
 
@@ -193,6 +193,7 @@ public class Connection {
       case 'R' -> Move.TURNRIGHT;
       case 'L' -> Move.TURNLEFT;
       case 'T' -> Move.TURNBACK;
+      case 'S' -> Move.STOP;
       default -> Move.GOSTRAIGHT;
     };
   }

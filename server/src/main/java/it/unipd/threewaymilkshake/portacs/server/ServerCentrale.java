@@ -42,7 +42,14 @@ public class ServerCentrale {
         generateMatrix(currentMulettos);
         //currentMulettos.getFirst().out.print("STOP,1");
 
+        for(Muletto mul : currentMulettos) {
+            for(Character move : mul.pathToNextTask) {
+                System.out.print(move);
+            }
+            System.out.print("\n");
+        }
         
+
         HashMap<Point, LinkedList<Muletto>> collisionDetected = Collision.CollisionDetector(new HashSet<Muletto>(currentMulettos));
        
         Collision.printCollisionDetected(collisionDetected);
@@ -53,6 +60,7 @@ public class ServerCentrale {
         responses.forEach((k, v)->{
             if(!v.actions.isEmpty()){
                 k.out.print("STOP,1");
+                k.pathToNextTask.addFirst('S');
             }
         });
         
