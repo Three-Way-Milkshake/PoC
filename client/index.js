@@ -128,12 +128,12 @@ client.on('close', ()=>{
     console.log('Socket is fully closed now.');
 })
 
-function sendSth(){
+/* function sendSth(){
     prompt.get(['first', 'last'], (err, res)=>{
         if (err) { return onErr(err); }
         client.write(res.first+" "+res.last+'\n');
     });    
-}
+} */
 
 function onErr(err) {
     console.log(err);

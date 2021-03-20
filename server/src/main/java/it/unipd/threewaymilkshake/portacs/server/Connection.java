@@ -25,6 +25,7 @@ public class Connection {
 
   private  static int ID_COUNTER=0;
   private boolean manager;
+  private boolean firstRead=true;
 
   Connection(Socket socket, WareHouseMap map, Deque<Character> tasks) {
     this.map=map;
@@ -63,6 +64,7 @@ public class Connection {
         //responsabile
         manager=true;
       }
+      // System.out.println("Fatto cose della mappa");
 
       out.println();
     } catch (IOException e) {
@@ -120,16 +122,18 @@ public class Connection {
         switch(par[0]){
           case "POS": 
             updatePosition(par); 
+            System.out.println("I am at: "+actualPosition.toString());
             break;
           case "PATH": 
             out.print("PATH,"+calculateAndGetPathToNextTask()+";"); 
             // out.print("PATH,TMMMLMMM;"); 
             //out.print("PATH,TMMMLMMM;"); 
             break;
+          case "MAP": break;
           default: 
             System.out.println("Unrecognized message: "+par[0]);
         }
-        System.out.println("I am at: "+actualPosition.toString());
+        
       });
   }
 
@@ -137,6 +141,17 @@ public class Connection {
     boolean r = true;
     try {
       lastMessage = in.readLine();
+      if(firstRead){
+        System.out.println(in.readLine());
+        firstRead=false;
+      }
+      // lastMessage+=";"+in.readLine();
+
+      /* String tmp="";
+      lastMessage="";
+      while((tmp = in.readLine())!=null){
+        lastMessage+=tmp;
+      } */
       if (lastMessage == null)
         r = false;
     } catch (IOException e) {

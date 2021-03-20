@@ -34,7 +34,7 @@ class Engine implements Runnable {
               connections.remove(c);
               System.out.println("Found a closed connection, removing it from list...");
             } else {
-              //System.out.println("Received: " + c.getLastMessage());
+              System.out.println("Received: " + c.getLastMessage());
               c.process();
             }
           }
@@ -63,7 +63,7 @@ class Engine implements Runnable {
       }
 
       try {
-        Thread.sleep(5000);
+        Thread.sleep(1000);
       } catch (InterruptedException e) {
         e.printStackTrace();
       }
