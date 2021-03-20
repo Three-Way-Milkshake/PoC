@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.Deque;
 import java.util.LinkedList;
 
-enum Move{TURNLEFT,TURNRIGHT,GOSTRAIGHT,TURNBACK,STOP}
+enum Move{TURNLEFT,TURNRIGHT,GOSTRAIGHT,TURNBACK,STOP;}
 
 public class Muletto {
     public int id;

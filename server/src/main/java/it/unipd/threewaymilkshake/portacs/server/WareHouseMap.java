@@ -88,13 +88,13 @@ class WareHouseMap {
     return poi.get(c);
   }
 
-  public Deque<Character> getPath(Point start, Point end){
+  public LinkedList<Character> getPath(Point start, Point end){
     System.out.println("From: "+start.toNodeString()+" to "+end.toNodeString());
     return getPath(start.getX(), start.getY(), end.getX(), end.getY(), start.getOrientation());
     // return getPath(start.getY(), start.getX(), end.getX(), end.getY(), start.getOrientation()); //TODO fix coordinate storte
   }
 
-  public Deque<Character> getPath(int startX, int startY, int endX, int endY, Orientation dir) {
+  public LinkedList<Character> getPath(int startX, int startY, int endX, int endY, Orientation dir) {
     int[][] arr=toIntMatrix();
 
     arr[startX][startY]=9;
@@ -112,7 +112,7 @@ class WareHouseMap {
 
     Node[] path=pathList.stream().toArray(Node[]::new);
     Point current=new Point(startX, startY, dir);
-    Deque<Character> moves=new LinkedList<>();
+    LinkedList<Character> moves=new LinkedList<>();
     char nextMove='n', tmp;
     for(int i=0; i<path.length-1; ++i){
       //int x=path[i].getX(), y=path[i].getY();

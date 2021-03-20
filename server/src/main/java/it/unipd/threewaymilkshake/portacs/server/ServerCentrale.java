@@ -60,7 +60,7 @@ public class ServerCentrale {
         responses.forEach((k, v)->{
             if(!v.actions.isEmpty()){
                 k.out.print("STOP,1");
-                k.pathToNextTask.addFirst('S');
+                k.pathToNextTask.addFirst(moveToCharacter(k.nextMoves.getFirst()));
             }
         });
         
@@ -70,6 +70,19 @@ public class ServerCentrale {
         
         // System.out.println("***");
         currentMulettos.clear();
+    }
+
+    public Character moveToCharacter(Move m) {
+        if(m == Move.TURNRIGHT)
+            return 'R';
+        else if(m == Move.TURNLEFT)
+            return 'L';
+        else if(m == Move.TURNBACK)
+            return 'T';
+        else if(m == Move.STOP)
+            return 'S';
+        else
+            return 'M';
     }
 
     public void generateMatrix(LinkedList<Muletto> currentMulettos) {
