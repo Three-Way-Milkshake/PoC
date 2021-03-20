@@ -14,8 +14,7 @@ export class GuidamanualeComponent implements OnInit {
   cmd : string = 'Start';
   constructor() { }
 
-  ngOnInit(): void {
-  }
+  
 
   movement(dir : string) {
     socket.emit(dir);

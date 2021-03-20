@@ -15,6 +15,7 @@ class Lista {
 
     removeFirstPOI() {
       this.lista.shift();
+      //aggiungere un return
     }
     
     listaToString() {

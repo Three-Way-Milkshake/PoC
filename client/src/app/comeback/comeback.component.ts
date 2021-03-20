@@ -11,10 +11,12 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
 })
 export class ComebackComponent implements OnInit {
 
-  constructor() { }
+  constructor() {
+    //service
+   }
 
-  ngOnInit(): void {
-  }
+
+
   comeBack(){
     socket.emit('comeback');
   }

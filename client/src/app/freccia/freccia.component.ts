@@ -21,7 +21,6 @@ export class FrecciaComponent implements OnInit {
   dir[3] start/stop
   */
   dir: boolean[] = [false, false, false, false];
-  title = "ciao";
   constructor(private http : HttpClient, private ngZone: NgZone) {
     
   }

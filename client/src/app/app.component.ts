@@ -11,7 +11,6 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'muletto';
   automatica : boolean = true; // cosa diverrà
   guida : string = 'manuale';
   
