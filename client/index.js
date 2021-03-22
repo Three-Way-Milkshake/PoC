@@ -59,14 +59,12 @@ client.on('data', (data)=>{
         let cmd = msg[i].split(",");
         switch(cmd[0]){
             case "ALIVE": 
-                
-                //io.emit("mappa", map.getMap());
+             
                 
                 break;
             case "MAP":
                 
                 map.createMap(cmd[1], cmd[2], cmd[3]);
-                //io.emit("mappa", map.getMap());
                 
                 break;
             case "PATH":
@@ -106,20 +104,6 @@ client.on('data', (data)=>{
         io.emit("pulsante");
         canCheck = false;
     }
-    /*
-    if (!requestButton) {
-        console.log("chiedo di mostrare il pulsante");
-        io.emit("pulsante", "1");
-    }
-    */
-    /*
-    if (mosse.isEmpty() && !alreadyChecked) {
-        alreadyChecked = true;
-        io.emit("pulsante");
-        console.log("ti prego funziona.mp4 il pulsante");
-        
-    }
-    */
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
     client.write('\n', ()=>{
         console.log("response sent");
@@ -174,9 +158,9 @@ io.on("connection", (socket) => {
     socket.on("mappa", () => {
         socket.emit("mappa", map.getMap());
     });
-    socket.on("comeback", () => {
+    socket.on("start", () => {
         c.aggiungiComando("PATH"); //PATH -> taskfinite -> gestito da server
-        c.aggiungiComando("MAP");
+        //c.aggiungiComando("MAP");
     });
     //---guida manuale------
     socket.on("up", () => {
