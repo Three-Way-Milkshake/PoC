@@ -1,4 +1,4 @@
-import { GuidamanualeComponent } from './guidamanuale/guidamanuale.component';
+import { ManualDrivingComponent } from './manualdriving/manualdriving.component';
 import { StartButtonComponent } from './startbutton/startbutton.component';
 import { NgModule, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +16,7 @@ import { ArrowsComponent } from './arrows/arrows.component';
     MapComponent,
     TasklistComponent,
     StartButtonComponent,
-    GuidamanualeComponent
+    ManualDrivingComponent
   ],
   imports: [
     BrowserModule,
