@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { FrecciaComponent } from './freccia.component';
+import { TasklistComponent } from './tasklist.component';
 
-describe('FrecciaComponent', () => {
-  let component: FrecciaComponent;
-  let fixture: ComponentFixture<FrecciaComponent>;
+describe('TasklistComponent', () => {
+  let component: TasklistComponent;
+  let fixture: ComponentFixture<TasklistComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FrecciaComponent ]
+      declarations: [ TasklistComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(FrecciaComponent);
+    fixture = TestBed.createComponent(TasklistComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

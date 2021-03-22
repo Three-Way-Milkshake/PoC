@@ -2,11 +2,11 @@
     <h1>Benvenuto nel tuo muletto</h1>   
     
         
-    <div class = "listaTask">
-        <app-listatask></app-listatask>
+    <div class = "taskList">
+        <app-tasklist></app-tasklist>
     </div>
-    <div class = "base">
-        <app-comeback></app-comeback>
+    <div class = "startb">
+        <app-startbutton></app-startbutton>
     </div>
     
     <div class = "mappa">
@@ -17,12 +17,14 @@
 
     <div class="guida">
     <div *ngIf="automatica; else manuale">
-        <div class="freccia">
-            <app-freccia></app-freccia>
+        <h1>Guida Automatica</h1>
+        <div class="arrows">
+            <app-arrows></app-arrows>
         </div>
     </div>
     <ng-template #manuale>
         <div class="manuale">
+            <h1> Guida Manuale </h1>
             <app-guidamanuale></app-guidamanuale>
         </div>
     </ng-template>

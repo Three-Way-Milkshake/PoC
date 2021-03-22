@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CambioguidaComponent } from './cambioguida.component';
+import { ArrowsComponent } from './arrows.component';
 
-describe('CambioguidaComponent', () => {
-  let component: CambioguidaComponent;
-  let fixture: ComponentFixture<CambioguidaComponent>;
+describe('ArrowsComponent', () => {
+  let component: ArrowsComponent;
+  let fixture: ComponentFixture<ArrowsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CambioguidaComponent ]
+      declarations: [ ArrowsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(CambioguidaComponent);
+    fixture = TestBed.createComponent(ArrowsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

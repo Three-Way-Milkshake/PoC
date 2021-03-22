@@ -9,12 +9,10 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
   templateUrl: './guidamanuale.component.html',
   styleUrls: ['./guidamanuale.component.css']
 })
-export class GuidamanualeComponent implements OnInit {
+export class GuidamanualeComponent {
   stop : boolean = false;
   cmd : string = 'Start';
   constructor() { }
-
-  
 
   movement(dir : string) {
     socket.emit(dir);

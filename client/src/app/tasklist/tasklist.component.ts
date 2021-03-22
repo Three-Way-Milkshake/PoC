@@ -1,21 +1,18 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NgZone } from '@angular/core';
-import { ListataskService } from './../listatask.service'
-//import { environment } from './../../environments/environment';
-
-
+import { TasklistService } from '../services/tasklist.service';
 
 @Component({
-  selector: 'app-listatask',
-  templateUrl: './listatask.component.html',
-  styleUrls: ['./listatask.component.css']
+  selector: 'app-tasklist',
+  templateUrl: './tasklist.component.html',
+  styleUrls: ['./tasklist.component.css']
 })
-export class ListataskComponent implements OnInit {
+export class TasklistComponent implements OnInit {
+
   showButton : boolean = false;
   lista : string [] = [];
 
-  constructor(private http: HttpClient, private service: ListataskService, private ngZone: NgZone) {}
+  constructor(private service: TasklistService, private ngZone: NgZone) {}
 
   ngOnInit() {
     //update list
@@ -48,4 +45,6 @@ export class ListataskComponent implements OnInit {
     }
   }
   
+
 }
+

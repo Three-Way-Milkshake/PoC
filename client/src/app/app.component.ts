@@ -1,4 +1,4 @@
-import { FrecciaComponent } from './freccia/freccia.component';
+import { ArrowsComponent } from './arrows/arrows.component';
 import { Component } from '@angular/core';
 import { io } from "socket.io-client";
 import { environment } from './../environments/environment';

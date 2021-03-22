@@ -259,5 +259,5 @@ function changePosition(mossa){
           break;
     }
     io.emit("updatemap", x+","+y+","+dir);
-    io.emit("frecce", mossa);
+    io.emit("arrows", mossa);
 }
