@@ -20,6 +20,6 @@ export class ManualdrivingService {
   }
 
   onMovement(dir : string){
-    socket.emit(dir);
+    socket.emit("movement", dir);
   }
 }

@@ -163,6 +163,7 @@ io.on("connection", (socket) => {
         //c.aggiungiComando("MAP");
     });
     //---guida manuale------
+    /*
     socket.on("up", () => {
         console.log("up richiamato");
     });
@@ -175,6 +176,10 @@ io.on("connection", (socket) => {
     socket.on("left", () => {
         console.log("left richiamato");
     });
+    */
+   socket.on("movement", (data) => {
+        console.log(data);
+   });
     socket.on("start", () => {
         console.log("start richiamato");
     });
