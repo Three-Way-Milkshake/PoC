@@ -28,7 +28,11 @@ let x = process.argv[4], y = process.argv[5], dir = 2;
 let stopped = false;
 let canCheck = false;
 let requestButton = false;
-let manualDrive=false;
+
+let manualDriving = false;
+let manualStop = true; //false si muove
+let manualDrivingList = new Listamosse();
+
 /*
 dir:
 0 = su
@@ -80,7 +84,7 @@ client.on('data', (data)=>{
                     stopped = true;
                 } else {
                     for (let k = 0; k < parseInt(cmd[1]); k++) {
-                        mosse.aggiungiMossa('S');
+                        mosse.addMove('S');
                     }
                 }
                 break;
@@ -88,8 +92,8 @@ client.on('data', (data)=>{
                 stopped = false;
                 break;
             case "LIST":
-                for (let i = 0; i < cmd[1].length; i++) {
-                    lista.addPOI(cmd[1][i]);
+                for (let z = 0; z < cmd[1].length; z++) {
+                    lista.addPOI(cmd[1][z]);
                 }
                 io.emit("lista", lista.getLista());
 
@@ -98,11 +102,11 @@ client.on('data', (data)=>{
                 console.log("Unrecognized message from server");
         }
     }
-    if(manualDrive){
-        io.emit("arrows", mosse.getMossa());
-    } else if (!stopped) {
-        changePosition(mosse.getMossa());
+    //muovere il muletto in automatic driving
+    if (!manualDriving && !stopped) {
+        changePosition(mosse.getMove());
     }
+    //task completata
     if (mosse.isEmpty() && canCheck) {
         io.emit("pulsante");
         canCheck = false;
@@ -140,6 +144,7 @@ function onErr(err) {
 
 
 io.on("connection", (socket) => {
+    
     //console.log("mostra il pulsante");
     // socket.emit("mappa", map.getMap());
     socket.emit("lista", lista.getLista());
@@ -165,37 +170,28 @@ io.on("connection", (socket) => {
         c.aggiungiComando("PATH"); //PATH -> taskfinite -> gestito da server
         //c.aggiungiComando("MAP");
     });
-    //---guida manuale------
-    /*
-    socket.on("up", () => {
-        console.log("up richiamato");
-    });
-    socket.on("down", () => {
-        console.log("down richiamato");
-    });
-    socket.on("right", () => {
-        console.log("right richiamato");
-    });
-    socket.on("left", () => {
-        console.log("left richiamato");
-    });
-    */
-   socket.on("movement", (data) => {
-        changePosition(data.toString());
+    //---guida manuale--
+   socket.on("movement", (manualMove) => { // pressione tasti provenienti dalla guida manuale
+        manualDrivingList.addMove(manualMove.toString().replace(/(\r\n|\n|\r)/gm, ""));
    });
-    socket.on("start", () => {
+    socket.on("manualStart", () => {
+        manualStop = false;
         console.log("start richiamato");
     });
-    socket.on("stop", () => {
+    socket.on("manualStop", () => {
+        manualStop = true;
         console.log("stop richiamato");
     });
     socket.on("automatica", () => {
-        manualDrive = false;
-        console.log("automatica richiamato");
+        manualDriving = false;
+        manualDrivingList.deleteAllMoves();
+        c.aggiungiComando("PATH");
+        console.log("guida automatica richiamato");
     });
     socket.on("manuale", () => {
-        manualDrive = true;
-        console.log("manuale richiamato");
+        manualDriving = true;
+        manualStop = true;
+        console.log("guida manuale richiamato");
     });
     
     //task
@@ -256,3 +252,16 @@ function changePosition(mossa){
     console.log("inviata posizione");
     io.emit("arrows", mossa);
 }
+
+setInterval(() => {
+    console.log("suca");
+    if (manualDriving) {
+        let tempMove = manualDrivingList.getLastInsertMove();
+        console.log(tempMove === undefined ? "M" : tempMove);
+        manualDrivingList.deleteAllMoves();
+        if (!manualStop) {
+            console.log("ciao personeeeeeeeeeeeee");
+            changePosition(tempMove === undefined ? "M" : tempMove);
+        }
+    }
+}, 1000);

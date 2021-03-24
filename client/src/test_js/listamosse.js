@@ -3,24 +3,33 @@ class Listamosse {
     /* serve per spostare il muletto
         ad ogni mossa si aggiorna la mappa cambiando il muletto
     */
-    mosse = [];
+    moves = [];
 
     createMosse(seq){
+        this.moves = [];
         for (let i = 0; i < seq.length; i++) {
-            this.mosse.push(seq[i]);
+            this.moves.push(seq[i]);
         }
+    }
+
+    deleteAllMoves() {
+        this.moves=[];
+    }
+
+    getLastInsertMove() {
+        return this.moves.pop();
     }
     
     isEmpty() {
-        return (this.mosse.length == 0 || this.mosse === undefined);
+        return (this.moves.length == 0 || this.moves === undefined);
     }
 
-    getMossa() {
-        return this.mosse.shift();
+    getMove() {
+        return this.moves.shift();
     }
 
-    aggiungiMossa(mossa){
-        this.mosse.unshift(mossa);
+    addMove(moves){
+        this.moves.unshift(moves);
     }
 }
 module.exports = Listamosse;

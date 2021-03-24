@@ -12,11 +12,11 @@ export class ManualdrivingService {
   constructor() { }
 
   stop() {
-    socket.emit("stop");
+    socket.emit("manualStop");
   }
 
   start() {
-    socket.emit("start");
+    socket.emit("manualStart");
   }
 
   onMovement(dir : string){

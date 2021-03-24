@@ -17,10 +17,10 @@ export class ManualDrivingComponent {
 
   startstop() {
     if (this.stop) {
-      this.service.start();
+      this.service.stop();
       this.cmd = 'Start';
     } else {
-      this.service.stop();
+      this.service.start();
       this.cmd = 'Stop';
     }
     this.stop = !this.stop;

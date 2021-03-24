@@ -1,6 +1,7 @@
 import { MapService } from './../services/map.service';
 import { Component, OnInit, NgZone } from '@angular/core';
 import { environment } from './../../environments/environment';
+import { UnitPosition } from './../unitposition';
 
 @Component({
   selector: 'app-map',
@@ -9,10 +10,10 @@ import { environment } from './../../environments/environment';
 })
 export class MapComponent implements OnInit {
   map: string = ''; //html
-  posX: number = environment.x;
-  posY: number = environment.y;
-  dir: number = 0;
-  constructor(private service: MapService, private ngZone: NgZone) { }
+  pos: UnitPosition;
+  constructor(private service: MapService, private ngZone: NgZone) {
+    this.pos = {posX: environment.x, posY: environment.y, dir: 0};
+   }
 
   ngOnInit() {
     this.service.onNewAction().subscribe((data) => {
@@ -86,15 +87,15 @@ export class MapComponent implements OnInit {
       }
       i++;
     }
-    arr[this.posY][this.posX] = "&"; //metto il muletto nella mappa 
+    arr[this.pos.posY][this.pos.posX] = "&"; //metto il muletto nella mappa 
     this.map = this.getMap(arr);
   }
 
   changePosition(mossa: string) {
     let pos : string[] = mossa.toString().split(",");
-    this.posX = parseInt(pos[0]);
-    this.posY = parseInt(pos[1]);
-    this.dir = parseInt(pos[2]);
+    this.pos.posX = parseInt(pos[0]);
+    this.pos.posY = parseInt(pos[1]);
+    this.pos.dir = parseInt(pos[2]);
     this.service.requestMap();
   }
 }
