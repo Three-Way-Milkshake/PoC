@@ -28,6 +28,7 @@ let x = process.argv[4], y = process.argv[5], dir = 2;
 let stopped = false;
 let canCheck = false;
 let requestButton = false;
+let manualDrive=false;
 /*
 dir:
 0 = su
@@ -97,7 +98,9 @@ client.on('data', (data)=>{
                 console.log("Unrecognized message from server");
         }
     }
-    if (!stopped) {
+    if(manualDrive){
+        io.emit("arrows", mosse.getMossa());
+    } else if (!stopped) {
         changePosition(mosse.getMossa());
     }
     if (mosse.isEmpty() && canCheck) {
@@ -178,7 +181,7 @@ io.on("connection", (socket) => {
     });
     */
    socket.on("movement", (data) => {
-        console.log(data);
+        changePosition(data.toString());
    });
     socket.on("start", () => {
         console.log("start richiamato");
@@ -187,9 +190,11 @@ io.on("connection", (socket) => {
         console.log("stop richiamato");
     });
     socket.on("automatica", () => {
+        manualDrive = false;
         console.log("automatica richiamato");
     });
     socket.on("manuale", () => {
+        manualDrive = true;
         console.log("manuale richiamato");
     });
     
@@ -248,5 +253,6 @@ function changePosition(mossa){
           break;
     }
     io.emit("updatemap", x+","+y+","+dir);
+    console.log("inviata posizione");
     io.emit("arrows", mossa);
 }
