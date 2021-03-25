@@ -249,18 +249,14 @@ function changePosition(mossa){
           break;
     }
     io.emit("updatemap", x+","+y+","+dir);
-    console.log("inviata posizione");
     io.emit("arrows", mossa);
 }
 
 setInterval(() => {
-    console.log("suca");
     if (manualDriving) {
         let tempMove = manualDrivingList.getLastInsertMove();
-        console.log(tempMove === undefined ? "M" : tempMove);
         manualDrivingList.deleteAllMoves();
         if (!manualStop) {
-            console.log("ciao personeeeeeeeeeeeee");
             changePosition(tempMove === undefined ? "M" : tempMove);
         }
     }
