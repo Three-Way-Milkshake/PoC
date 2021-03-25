@@ -1,4 +1,4 @@
-import { FrecciaComponent } from './freccia/freccia.component';
+import { ArrowsComponent } from './arrows/arrows.component';
 import { Component } from '@angular/core';
 import { io } from "socket.io-client";
 import { environment } from './../environments/environment';
@@ -11,7 +11,6 @@ const socket = io(`http://127.0.0.1:${environment.socketio_port}/`);
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'muletto';
   automatica : boolean = true; // cosa diverrà
   guida : string = 'manuale';
   

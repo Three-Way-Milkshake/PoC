@@ -13,8 +13,13 @@ class Lista {
       this.lista.push(p);
     }
 
+    getFirstPOI() {
+      return this.lista[0];
+    }
+
     removeFirstPOI() {
       this.lista.shift();
+      //aggiungere un return
     }
     
     listaToString() {

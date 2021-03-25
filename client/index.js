@@ -20,12 +20,19 @@ const io = require("socket.io")(http, {
 
 let map = new Map();
 let mosse = new Listamosse();
-let lista = new Lista();
+let lista = new Lista(); //dei POI
 
 //da modificare x, y, dir
 // let x = 0, y = 0, dir = 0;
-let x = process.argv[4], y = process.argv[5], dir = 0;
+let x = process.argv[4], y = process.argv[5], dir = 2;
 let stopped = false;
+let canCheckAuto = false;
+let requestButton = false;
+
+let manualDriving = false;
+let manualStop = true; //false si muove
+let manualDrivingList = new Listamosse();
+
 /*
 dir:
 0 = su
@@ -57,29 +64,27 @@ client.on('data', (data)=>{
         let cmd = msg[i].split(",");
         switch(cmd[0]){
             case "ALIVE": 
-                
-                //io.emit("mappa", map.getMap());
+             
                 
                 break;
             case "MAP":
                 
                 map.createMap(cmd[1], cmd[2], cmd[3]);
-                //io.emit("mappa", map.getMap());
                 
                 break;
             case "PATH":
+                canCheckAuto = true;
                 mosse.createMosse(cmd[1]);
                 console.log("PATH"+cmd[1]);
             
                 break;
             case "STOP":
                 console.log("Va bene sto fermo");
-                if (cmd[1] === '0') {
+                if (cmd[1] == '0') {
                     stopped = true;
                 } else {
                     for (let k = 0; k < parseInt(cmd[1]); k++) {
-                        mosse.aggiungiMossa('S');
-                        console.log("INSERISCO STOOOOOOP");
+                        mosse.addMove('S');
                     }
                 }
                 break;
@@ -87,32 +92,30 @@ client.on('data', (data)=>{
                 stopped = false;
                 break;
             case "LIST":
-                for (let i = 0; i < cmd[1].length; i++) {
-                    lista.addPOI(cmd[1][i]);
+                for (let z = 0; z < cmd[1].length; z++) {
+                    lista.addPOI(cmd[1][z]);
                 }
                 io.emit("lista", lista.getLista());
-                /* io.on("connection", (socket) => {
-                    socket.emit("lista", lista.getLista());
-                }); */
 
                 break;     
             default: 
                 console.log("Unrecognized message from server");
         }
     }
-    if (!stopped) {
-        
-        //io.emit("frecce", mosse.getMossa());
-        changePosition(mosse.getMossa());
-        //io.emit("mappa", map.getMap());
-        
+    //muovere il muletto in automatic driving
+    if (!manualDriving && !stopped) {
+        changePosition(mosse.getMove());
     }
-    
+    //task completata
+    if (!manualDriving && mosse.isEmpty() && canCheckAuto) { // automatica
+        io.emit("completedtaskbutton");
+        canCheckAuto = false;
+    } 
+    if (manualDriving && map.getCell(x, y) == lista.getFirstPOI()){ //manuale
+        io.emit("completedtaskbutton");
+    }
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
-    client.write('\n', ()=>{
-        console.log("response sent" + " POS, (" + y + "," + x + ") ," + dir);
-    
-    });
+    client.write('\n');
     
 });
 
@@ -128,12 +131,12 @@ client.on('close', ()=>{
     console.log('Socket is fully closed now.');
 })
 
-/* function sendSth(){
+function sendSth(){
     prompt.get(['first', 'last'], (err, res)=>{
         if (err) { return onErr(err); }
         client.write(res.first+" "+res.last+'\n');
     });    
-} */
+}
 
 function onErr(err) {
     console.log(err);
@@ -142,21 +145,16 @@ function onErr(err) {
 
 
 io.on("connection", (socket) => {
-    socket.emit("pulsante");
-    console.log("mostra il pulsante");
+    
+    //console.log("mostra il pulsante");
     // socket.emit("mappa", map.getMap());
     socket.emit("lista", lista.getLista());
-    // console.log("connected someone");
-    //}, 10000, socket);
     
-
-    // socket.emit("frecce", "M");
-    //socket.emit("mappa", map.getMap());
+    
     socket.on("updateposition", (data) => {
         let pos = data.toString().split(",");
         x = pos[0];
         y = pos[1];
-        // dir = pos[2];
         dir=({
             N: 0,
             E: 1,
@@ -169,34 +167,32 @@ io.on("connection", (socket) => {
     socket.on("mappa", () => {
         socket.emit("mappa", map.getMap());
     });
-    socket.on("comeback", () => {
-        c.aggiungiComando("PATH"); //PATH -> taskfinite -> gestito da server
-        c.aggiungiComando("MAP");
-    });
-    //---guida manuale------
-    socket.on("up", () => {
-        console.log("up richiamato");
-    });
-    socket.on("down", () => {
-        console.log("down richiamato");
-    });
-    socket.on("right", () => {
-        console.log("right richiamato");
-    });
-    socket.on("left", () => {
-        console.log("left richiamato");
-    });
     socket.on("start", () => {
+        c.aggiungiComando("PATH"); //PATH -> taskfinite -> gestito da server
+        //c.aggiungiComando("MAP");
+    });
+    //---guida manuale--
+   socket.on("movement", (manualMove) => { // pressione tasti provenienti dalla guida manuale
+        manualDrivingList.addMove(manualMove.toString().replace(/(\r\n|\n|\r)/gm, ""));
+   });
+    socket.on("manualStart", () => {
+        manualStop = false;
         console.log("start richiamato");
     });
-    socket.on("stop", () => {
+    socket.on("manualStop", () => {
+        manualStop = true;
         console.log("stop richiamato");
     });
     socket.on("automatica", () => {
-        console.log("automatica richiamato");
+        manualDriving = false;
+        manualDrivingList.deleteAllMoves();
+        c.aggiungiComando("PATH");
+        console.log("guida automatica richiamato");
     });
     socket.on("manuale", () => {
-        console.log("manuale richiamato");
+        manualDriving = true;
+        manualStop = true;
+        console.log("guida manuale richiamato");
     });
     
     //task
@@ -242,7 +238,7 @@ function changePosition(mossa){
           //fermo non fa niente
           break;
         case "M":
-          if        (dir == 0) { 
+          if        (dir == 0) {
             y--;
           } else if (dir == 2) {
             y++;
@@ -254,5 +250,15 @@ function changePosition(mossa){
           break;
     }
     io.emit("updatemap", x+","+y+","+dir);
-    io.emit("frecce", mossa);
+    io.emit("arrows", mossa);
 }
+
+setInterval(() => {
+    if (manualDriving) {
+        let tempMove = manualDrivingList.getLastInsertMove();
+        manualDrivingList.deleteAllMoves();
+        if (!manualStop) {
+            changePosition(tempMove === undefined ? "M" : tempMove);
+        }
+    }
+}, 1000);

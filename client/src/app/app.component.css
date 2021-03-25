@@ -12,12 +12,12 @@ h1 {
     font-size: 4em;
 }
 
-.mappa {
+.map {
     margin: 1em;
     width: 40%;
 }
 
-.base{
+.startb{
     width: 30em;
     padding: 2em;
 }
@@ -29,9 +29,13 @@ h1 {
     text-align: center;
     border-radius: 35px; 
 }
-.listaTask{
+.taskList{
     margin-top: 1em;
 }
 .guida{
     margin: 1% 2% 3% 2%;
+}
+
+h1 {
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
