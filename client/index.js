@@ -107,11 +107,15 @@ client.on('data', (data)=>{
         changePosition(mosse.getMove());
     }
     //task completata
+    /*
     if (!manualDriving && mosse.isEmpty() && canCheckAuto) { // automatica
         io.emit("completedtaskbutton");
         canCheckAuto = false;
     } 
     if (manualDriving && map.getCell(x, y) == lista.getFirstPOI()){ //manuale
+        io.emit("completedtaskbutton");
+    }*/
+    if (map.getCell(x, y) == lista.getFirstPOI()){
         io.emit("completedtaskbutton");
     }
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
@@ -168,7 +172,7 @@ io.on("connection", (socket) => {
         socket.emit("mappa", map.getMap());
     });
     socket.on("start", () => {
-        c.aggiungiComando("PATH"); //PATH -> taskfinite -> gestito da server
+        c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
         //c.aggiungiComando("MAP");
     });
     //---guida manuale--
@@ -186,7 +190,7 @@ io.on("connection", (socket) => {
     socket.on("automatica", () => {
         manualDriving = false;
         manualDrivingList.deleteAllMoves();
-        c.aggiungiComando("PATH");
+        c.aggiungiComando("PATH,0"); //0 false -> richiede lo stesso percorso
         console.log("guida automatica richiamato");
     });
     socket.on("manuale", () => {
@@ -199,7 +203,7 @@ io.on("connection", (socket) => {
     socket.on("taskcompletata", () => {
         lista.removeFirstPOI();
         io.emit("lista", lista.getLista());
-        c.aggiungiComando("PATH");
+        c.aggiungiComando("PATH,1"); //1 true -> rimuovi anche la task
         c.aggiungiComando("MAP"); 
     });
 

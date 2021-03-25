@@ -82,7 +82,8 @@ public class Connection {
   }
 
   public String calculateAndGetPathToNextTask(){
-    char next=tasks.removeFirst();
+    // char next=tasks.removeFirst();
+    char next=tasks.getFirst();
     //System.out.println("Looking for "+actualPosition.toNodeString()+" to "+map.getPOIPosition(next));
     pathToNextTask=map.getPath(actualPosition, map.getPOIPosition(next));
     return pathToNextTask.toString().replaceAll("(,| |\\[|\\])", "");
@@ -125,6 +126,8 @@ public class Connection {
             System.out.println("I am at: "+actualPosition.toString());
             break;
           case "PATH": 
+            //boolean newTask=Boolean.parseBoolean(par[1]);
+            if(par[1].equals("1")) tasks.removeFirst();
             out.print("PATH,"+calculateAndGetPathToNextTask()+";"); 
             // out.print("PATH,TMMMLMMM;"); 
             //out.print("PATH,TMMMLMMM;"); 
