@@ -20,13 +20,13 @@ const io = require("socket.io")(http, {
 
 let map = new Map();
 let mosse = new Listamosse();
-let lista = new Lista();
+let lista = new Lista(); //dei POI
 
 //da modificare x, y, dir
 // let x = 0, y = 0, dir = 0;
 let x = process.argv[4], y = process.argv[5], dir = 2;
 let stopped = false;
-let canCheck = false;
+let canCheckAuto = false;
 let requestButton = false;
 
 let manualDriving = false;
@@ -73,7 +73,7 @@ client.on('data', (data)=>{
                 
                 break;
             case "PATH":
-                canCheck = true;
+                canCheckAuto = true;
                 mosse.createMosse(cmd[1]);
                 console.log("PATH"+cmd[1]);
             
@@ -107,14 +107,15 @@ client.on('data', (data)=>{
         changePosition(mosse.getMove());
     }
     //task completata
-    if (mosse.isEmpty() && canCheck) {
-        io.emit("pulsante");
-        canCheck = false;
+    if (!manualDriving && mosse.isEmpty() && canCheckAuto) { // automatica
+        io.emit("completedtaskbutton");
+        canCheckAuto = false;
+    } 
+    if (manualDriving && map.getCell(x, y) == lista.getFirstPOI()){ //manuale
+        io.emit("completedtaskbutton");
     }
     client.write(c.getDatiESvuota("POS," + x + "," + y + "," + dir)); 
-    client.write('\n', ()=>{
-        console.log("response sent");
-    });
+    client.write('\n');
     
 });
 

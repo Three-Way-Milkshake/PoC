@@ -16,7 +16,7 @@ export class TasklistService {
 
   onGetButton() {
     return new Observable(observer => {
-      socket.on('pulsante', () => {
+      socket.on('completedtaskbutton', () => {
         console.log("service mostra pulsante")
         observer.next();
       });

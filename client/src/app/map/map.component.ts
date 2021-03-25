@@ -28,8 +28,6 @@ export class MapComponent implements OnInit {
         this.setValues(String(data));
       });
     });
-
-
   }
 
   getMap(map: string[][]) {
@@ -51,7 +49,15 @@ export class MapComponent implements OnInit {
           tabellaHtml += '<td><img src="assets/up.png"></td>';
         } else if (map[i][j] === '&') {
           //controllare la direzione e far stampare immagine corretta
-          tabellaHtml += '<td><img src="assets/muletto.png"></td>';
+          if        (this.pos.dir == 0) { // facing NORD
+            tabellaHtml += '<td><img src="assets/mulettoN.png"></td>';
+          } else if (this.pos.dir == 1) { // facing EAST
+            tabellaHtml += '<td><img src="assets/mulettoE.png"></td>';
+          } else if (this.pos.dir == 2) { // facing SOUTH
+            tabellaHtml += '<td><img src="assets/mulettoS.png"></td>';
+          } else if (this.pos.dir == 3) { // facing WEST
+            tabellaHtml += '<td><img src="assets/mulettoO.png"></td>';
+          }
         } else { //POI
 
           tabellaHtml += '<td style="background-color: red;">' + map[i][j] + '</td>';
