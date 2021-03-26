@@ -1,3 +1,4 @@
+import { UnitPosition } from './../../../../client/src/app/unitposition';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { io } from "socket.io-client";
@@ -14,12 +15,8 @@ const socket = io("http://127.0.0.1:8090/");
 })
 export class MapComponent implements OnInit {
   map : string = '';
-  posX : number[] = [];
-  posY : number[] = [];
-  dir : number[] = [];
-  constructor(private http: HttpClient, private ngZone: NgZone) {
-    
-  }
+  pos : UnitPosition [];
+  constructor(private http: HttpClient, private ngZone: NgZone) {}
 
   ngOnInit() {
     //this.getValues();
@@ -75,8 +72,17 @@ export class MapComponent implements OnInit {
           tabellaHtml += '<td><img src="assets/sx.png"></td>';
         } else if(map[i][j] === '5'){                                    // down -> up
           tabellaHtml += '<td><img src="assets/up.png"></td>';
-        } else if(map[i][j] === 'Z'){
-          tabellaHtml += '<td><img src="assets/muletto.png"></td>';
+        } else if(map[i][j] === '&'){
+          let unitDir = this.getDir(i, j);
+          if        (unitDir == 0) { // facing NORD
+            tabellaHtml += '<td><img src="assets/mulettoN.png"></td>';
+          } else if (unitDir == 1) { // facing EAST
+            tabellaHtml += '<td><img src="assets/mulettoE.png"></td>';
+          } else if (unitDir == 2) { // facing SOUTH
+            tabellaHtml += '<td><img src="assets/mulettoS.png"></td>';
+          } else if (unitDir == 3) { // facing WEST
+            tabellaHtml += '<td><img src="assets/mulettoO.png"></td>';
+          }
         } else { //POI
           
           tabellaHtml += '<td style="background-color: red;">'+map[i][j]+'</td>';          
@@ -112,19 +118,28 @@ export class MapComponent implements OnInit {
       i++; 
     }
     //console.log(arr);
-    for (let t = 0; t < this.posX.length; t++) {
-      arr[this.posX[t]][this.posY[t]] = "Z";
+    for (let t = 0; t < this.pos.length; t++) {
+      arr[this.pos[t].posX][this.pos[t].posY] = "&";
     }
     this.map = this.getMap(arr);
+  }
+
+  getDir(x : number, y : number) {
+    for (let t = 0; t < this.pos.length; t++) {
+      if (this.pos[t].posX == x && this.pos[t].posY == y) {
+        return this.pos[t].dir;
+      }
+      return -1;
+    }
   }
 
   changePosition(cmd : string){
     cmd = cmd.toString().replace(/(\r\n|\n|\r)/gm, "");
     let data : string[] = cmd.toString().split(",");
     for (let j = 0, i = 0; i < data.length; i= i+3, j++) {
-      this.posX[j] = parseInt(data[i]);
-      this.posY[j] = parseInt(data[i+1]);
-      this.dir[j] = parseInt(data[i+2]);
+      this.pos[j].posX = parseInt(data[i]);
+      this.pos[j].posY = parseInt(data[i+1]);
+      this.pos[j].dir = parseInt(data[i+2]);
     }
     socket.emit("mappa");
   }
