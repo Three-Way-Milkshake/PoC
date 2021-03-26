@@ -35,5 +35,6 @@ export class TasklistService {
 
   doneTask(){
     socket.emit("taskcompletata");
+    
   }
 }

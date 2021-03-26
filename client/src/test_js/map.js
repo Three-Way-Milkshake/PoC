@@ -9,6 +9,10 @@ class Map {
     'character' = POI
     */
     map = [];
+    
+    row = 0;
+    col = 0;
+    
     constructor() {}
   
     setMap(m) {
@@ -16,25 +20,32 @@ class Map {
     }
 
     getCell(x, y) {
-      return this.map[y][x];
+      let tempVar = this.map[y][x];
+      return (tempVar === 'undefined'? "" : tempVar);
     }
-
 
     getMap() {
       return this.mapToString();
     }
     
+    getRow() {
+      return this.row;
+    }
    
+    getCol() {
+      return this.col;
+    }
+    
     createMap(r, c, seq) {
-      console.log(seq)
+      
+      this.row = parseInt(r);
+      this.col = parseInt(c);
       let counter=0;
       for (let i = 0; i < r; i++) {
         this.map[i] = [];
         for (let j = 0; j < c; j++) {
           this.map[i][j] = seq[i*r + j];
-          // this.map[i][j] = seq[i*r + j];
           this.map[i][j] = seq[counter++];
-          console.log("riga: "+i+", col: "+j+": "+seq[counter]);
         }
       }
     }

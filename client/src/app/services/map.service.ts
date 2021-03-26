@@ -1,7 +1,7 @@
 import { Injectable, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { io } from "socket.io-client";
-import { Observable } from 'rxjs';
+import { observable, Observable } from 'rxjs';
 
 import { environment } from './../../environments/environment';
 
@@ -24,6 +24,14 @@ export class MapService {
   onNewAction() {
     return new Observable(observer => {
       socket.on('updatemap', (msg: string) => {
+        observer.next(msg);
+      });
+    });
+  }
+
+  onNewPOI(){
+    return new Observable(observer => {
+      socket.on('updatePOI', (msg: string) => {
         observer.next(msg);
       });
     });

@@ -31,6 +31,7 @@ export class TasklistComponent implements OnInit {
   }
 
   
+  
   taskCompletata() {
     this.service.doneTask();
     this.showButton = false;

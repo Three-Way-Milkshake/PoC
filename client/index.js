@@ -10,6 +10,7 @@ const Listamosse = require('./src/test_js/listamosse');
 const net = require('net');
 const SERVER_PORT = 1723;
 
+//angular
 const io = require("socket.io")(http, {
     cors: {
     //   origin: "http://localhost:4200",
@@ -68,18 +69,14 @@ client.on('data', (data)=>{
                 
                 break;
             case "MAP":
-                
                 map.createMap(cmd[1], cmd[2], cmd[3]);
-                
                 break;
             case "PATH":
                 canCheckAuto = true;
                 mosse.createMosse(cmd[1]);
-                console.log("PATH"+cmd[1]);
-            
+                
                 break;
             case "STOP":
-                console.log("Va bene sto fermo");
                 if (cmd[1] == '0') {
                     stopped = true;
                 } else {
@@ -96,7 +93,8 @@ client.on('data', (data)=>{
                     lista.addPOI(cmd[1][z]);
                 }
                 io.emit("lista", lista.getLista());
-
+                let tempVar = lista.getFirstPOI();
+                io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
                 break;     
             default: 
                 console.log("Unrecognized message from server");
@@ -107,14 +105,6 @@ client.on('data', (data)=>{
         changePosition(mosse.getMove());
     }
     //task completata
-    /*
-    if (!manualDriving && mosse.isEmpty() && canCheckAuto) { // automatica
-        io.emit("completedtaskbutton");
-        canCheckAuto = false;
-    } 
-    if (manualDriving && map.getCell(x, y) == lista.getFirstPOI()){ //manuale
-        io.emit("completedtaskbutton");
-    }*/
     if (map.getCell(x, y) == lista.getFirstPOI()){
         io.emit("completedtaskbutton");
     }
@@ -152,7 +142,9 @@ io.on("connection", (socket) => {
     
     //console.log("mostra il pulsante");
     // socket.emit("mappa", map.getMap());
-    socket.emit("lista", lista.getLista());
+    io.emit("lista", lista.getLista());
+    let tempVar = lista.getFirstPOI();
+    io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
     
     
     socket.on("updateposition", (data) => {
@@ -169,7 +161,7 @@ io.on("connection", (socket) => {
     });
     
     socket.on("mappa", () => {
-        socket.emit("mappa", map.getMap());
+        io.emit("mappa", map.getMap());
     });
     socket.on("start", () => {
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
@@ -181,28 +173,26 @@ io.on("connection", (socket) => {
    });
     socket.on("manualStart", () => {
         manualStop = false;
-        console.log("start richiamato");
     });
     socket.on("manualStop", () => {
         manualStop = true;
-        console.log("stop richiamato");
     });
     socket.on("automatica", () => {
         manualDriving = false;
         manualDrivingList.deleteAllMoves();
         c.aggiungiComando("PATH,0"); //0 false -> richiede lo stesso percorso
-        console.log("guida automatica richiamato");
     });
     socket.on("manuale", () => {
         manualDriving = true;
         manualStop = true;
-        console.log("guida manuale richiamato");
     });
     
     //task
     socket.on("taskcompletata", () => {
         lista.removeFirstPOI();
         io.emit("lista", lista.getLista());
+        let tempVar = lista.getFirstPOI();
+        io.emit("updatePOI", (tempVar === 'undefined'? "" : tempVar));
         c.aggiungiComando("PATH,1"); //1 true -> rimuovi anche la task
         c.aggiungiComando("MAP"); 
     });
@@ -242,14 +232,20 @@ function changePosition(mossa){
           //fermo non fa niente
           break;
         case "M":
+          let yTemp = y;
+          let xTemp = x;
           if        (dir == 0) {
-            y--;
+            yTemp--;
           } else if (dir == 2) {
-            y++;
+            yTemp++;
           } else if (dir == 1) {
-            x++;
+            xTemp++;
           } else if (dir == 3) {
-            x--;
+            xTemp--;
+          }
+          if (xTemp >= 0 && yTemp >= 0 && xTemp < map.getCol() && yTemp < map.getRow() && (map.getCell(xTemp, yTemp) != '0')) {
+              y = yTemp;
+              x = xTemp;
           }
           break;
     }

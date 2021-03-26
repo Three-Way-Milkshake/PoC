@@ -11,6 +11,7 @@ import { UnitPosition } from './../unitposition';
 export class MapComponent implements OnInit {
   map: string = ''; //html
   pos: UnitPosition;
+  nextPOI: string = '';
   constructor(private service: MapService, private ngZone: NgZone) {
     this.pos = {posX: environment.x, posY: environment.y, dir: 0};
    }
@@ -26,6 +27,12 @@ export class MapComponent implements OnInit {
     this.service.onNewMap().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
+      });
+    });
+    this.service.onNewPOI().subscribe((data) => {
+      this.ngZone.run(() => {
+        this.nextPOI = String(data);
+        console.log(data)
       });
     });
   }
@@ -58,16 +65,15 @@ export class MapComponent implements OnInit {
           } else if (this.pos.dir == 3) { // facing WEST
             tabellaHtml += '<td><img src="assets/mulettoO.png"></td>';
           }
-        } else { //POI
-
+        } else if (map[i][j] == this.nextPOI) {
+          tabellaHtml += '<td><img src="assets/red.png"></td>';
+        } else {
           tabellaHtml += '<td style="background-color: red;">' + map[i][j] + '</td>';
         }
       }
       tabellaHtml += '</tr>';
     }
     tabellaHtml += '</table>';
-
-
     return tabellaHtml;
   }
   /*
