@@ -5,7 +5,7 @@ class Map {
     2 = ^ yes
     3 = v nope >  
     4 = > nope v
-    5 = < nope <
+    5 = < yes
     'character' = POI
     */
     map = [];
