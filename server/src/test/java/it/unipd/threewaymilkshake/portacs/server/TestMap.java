@@ -1,6 +1,7 @@
 package it.unipd.threewaymilkshake.portacs.server;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.Deque;
 
@@ -58,5 +59,131 @@ public class TestMap {
     WareHouseMap m=new WareHouseMap(arr);
     String res=m.getPath(new Point(1,0,Orientation.DOWN), m.getPOIPosition('b')).toString().replaceAll("(,| |\\[|\\])", "");
     assertEquals("TMRMMRMMLMMRMLMMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection1(){
+    int[][] arr=new int[][]{
+      {1, 2, 2, 1},
+      {4, 0, 0, 1},
+      {4, 1, 1, 1},
+      {1, 3, 3, 1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,0,Orientation.DOWN), new Point(0,3,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    assertEquals("MMLMMMLMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection2(){
+    int[][] arr=new int[][]{
+      {1,5,5,5,5,1,1,1,1},
+      {1,5,5,5,5,1,3,1,1},
+      {1,1,4,4,4,5,5,5,1},
+      {2,1,1,1,4,1,1,1,1},
+      {1,2,2,1,4,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,0,Orientation.DOWN), new Point(0,5,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    assertEquals("MMLMRMLMMRMMLMMLMMRMMMLMMMLMMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection3(){
+    int[][] arr=new int[][]{
+      {1,1,1,1,1,1,1,1,1},
+      {1,5,5,5,5,1,3,1,1},
+      {1,1,4,4,4,5,5,5,1},
+      {2,1,1,1,4,1,1,1,1},
+      {1,2,2,1,4,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,0,Orientation.DOWN), new Point(0,5,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    assertEquals("LMMMMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection4(){
+    int[][] arr=new int[][]{
+      {1,1,1,1,5,1,1,1,1},
+      {1,5,5,4,0,1,3,1,1},
+      {1,1,4,4,3,1,5,5,1},
+      {2,1,1,1,4,1,1,1,1},
+      {1,2,2,1,4,1,1,1,1},
+      {1,1,1,1,1,1,1,1,1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,0,Orientation.DOWN), new Point(0,5,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    assertEquals("LMMMRMMLMMLMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection5ComingFromRight(){
+    int[][] arr=new int[][]{
+      {1,1,1,0,1},
+      {1,0,1,0,1},
+      {1,0,1,0,1},
+      {1,1,1,5,1},
+      {1,1,1,1,1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,4,Orientation.DOWN), new Point(0,2,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    assertEquals("MMMRMMRMMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection5ComingFromLeft(){
+    int[][] arr=new int[][]{
+      {1,0,1,0,1},
+      {1,0,1,0,1},
+      {1,0,1,0,1},
+      {1,3,1,5,1},
+      {1,1,1,1,1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,0,Orientation.DOWN), new Point(0,2,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    assertEquals("MMMLMMLMMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection6FromLeft(){
+    int[][] arr=new int[][]{
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,1,1,1,1,1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,0,Orientation.DOWN), new Point(0,5,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    //assertEquals("MMMLMMLMMM", res);
+    assertEquals("MMMMMLMMMMMLMMMMM", res);
+  }
+
+  @Test
+  public void TestPathFindingDirection6FromRight(){
+    int[][] arr=new int[][]{
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,5,5,5,5,1},
+      {1,1,1,1,1,1}
+    };
+
+    WareHouseMap m=new WareHouseMap(arr);
+    String res=m.getPath(new Point (0,5,Orientation.DOWN), new Point(0,0,Orientation.UP)).toString().replaceAll("(,| |\\[|\\])", "");
+    //assertEquals("MMMLMMLMMM", res);
+    assertEquals("RMMMMM", res);
   }
 }

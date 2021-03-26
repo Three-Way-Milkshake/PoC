@@ -30,11 +30,11 @@ public class PathFinder {
       for (int column = 0; column < nodes[row].length; column++) {
         if (nodes[row][column] == 9) {
           start = new Node(row, column, nodes[row][column]);
-          break;
+          break; //might add for condition to avoid
         }
       }
       if (start != null) {
-        break;
+        break; //might add for condition to avoid
       }
     }
 
@@ -43,28 +43,51 @@ public class PathFinder {
     }
 
     
-    List<Node> temp = new ArrayList<Node>();
-    temp.add(start);
+    List<Node> tmp = new ArrayList<Node>(); //lista usata per scorrere i nodi percorribili
+    tmp.add(start);
     parents.put(start, null);
 
     boolean reachDestination = false;
-    while (temp.size() > 0 && !reachDestination) {
-      Node currentNode = temp.remove(0);
+    while (tmp.size() > 0 && !reachDestination) {
+      Node currentNode = tmp.remove(0);
       List<Node> children = getChildren(currentNode);
-      for (Node child : children) {
+      loop: for (Node child : children) {
         
-        if (!parents.containsKey(child)) {
+        if (!parents.containsKey(child)) { //se una cella non è ancora stata visitata viene aggiunta
           parents.put(child, currentNode);
 
           int value = child.getValue();
-          if (value == 1) {
-            temp.add(child);
+
+          /**
+           * 0: ostacolo
+           * 1: percorribile in tutti i sensi
+           * 2: UP
+           * 3: RIGHT
+           * 4: DOWN
+           * 5: LEFT
+           */
+          switch(value){
+            case 1: tmp.add(child); break;
+            case 2: if(currentNode.getX()==child.getX()+1) tmp.add(child); break;
+            case 3: if(currentNode.getY()==child.getY()-1) tmp.add(child); break;
+            case 4: if(currentNode.getX()==child.getX()-1) tmp.add(child); break;
+            case 5: if(currentNode.getY()==child.getY()+1) tmp.add(child); break;
+            case 10: {
+              tmp.add(child);
+              reachDestination = true;
+              end = child;
+              break loop;
+            }
+          }
+
+          /* if (value == 1) {
+            tmp.add(child);
           } else if (value == 9) {
-            temp.add(child);
+            tmp.add(child);
             reachDestination = true;
             end = child;
             break;
-          }
+          } */
         }
       }
     }

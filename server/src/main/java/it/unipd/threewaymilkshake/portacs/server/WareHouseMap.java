@@ -98,7 +98,7 @@ class WareHouseMap {
     int[][] arr=toIntMatrix();
 
     arr[startX][startY]=9;
-    arr[endX][endY]=9;
+    arr[endX][endY]=10;
 
     PathFinder p=new PathFinder(arr);
     List<Node> pathList = p.shortestPath();
@@ -114,7 +114,7 @@ class WareHouseMap {
     Point current=new Point(startX, startY, dir);
     LinkedList<Character> moves=new LinkedList<>();
     char nextMove='n', tmp;
-    for(int i=0; i<path.length-1; ++i){
+    for(int i=0; i<path.length-1; ++i){ // creates moves from start (excluded) to end (included)
       //int x=path[i].getX(), y=path[i].getY();
       int xn=path[i+1].getX(), yn=path[i+1].getY();
 
@@ -173,7 +173,8 @@ class WareHouseMap {
 }
 
 enum CellType {
-  OBSTACLE, NEUTRAL, UP, DOWN, RIGHT, LEFT, POI
+  // OBSTACLE, NEUTRAL, UP, DOWN, RIGHT, LEFT, POI
+  OBSTACLE, NEUTRAL, UP, RIGHT, DOWN, LEFT, POI
 };
 
 enum Orientation{

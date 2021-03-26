@@ -2,10 +2,10 @@ class Map {
     /*
     0 = spazio non transitabile
     1 = spazio transitabile
-    2 = ^
-    3 = v
-    4 = >
-    5 = <
+    2 = ^ yes
+    3 = v nope >  
+    4 = > nope v
+    5 = < nope <
     'character' = POI
     */
     map = [];
