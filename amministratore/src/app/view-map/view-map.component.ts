@@ -1,55 +1,32 @@
-import { UnitPosition } from './../../../../client/src/app/unitposition';
+import { ViewMapService } from '../services/view-map.service';
+import { UnitPosition } from './../../unitposition';
 import { Component, OnInit } from '@angular/core';
-import { io } from "socket.io-client";
-import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
-
-const socket = io("http://127.0.0.1:8090/");
-
 
 @Component({
   selector: 'app-viewmap',
-  templateUrl: './map.component.html',
-  styleUrls: ['./map.component.css']
+  templateUrl: './view-map.component.html',
+  styleUrls: ['./view-map.component.css']
 })
 export class ViewMapComponent implements OnInit {
   map : string = '';
   pos : UnitPosition [] = [];
-  constructor(private ngZone: NgZone) {}
+  constructor(private ngZone: NgZone, private service: ViewMapService) {}
 
   ngOnInit() {
-    this.onNewMossa().subscribe((data) =>{
+    this.service.onNewMossa().subscribe((data) =>{
       this.ngZone.run(() => {
         this.changePosition(String(data));
       }); 
     })
 
-    this.onNewMessage().subscribe((data) => {
+    this.service.onNewMap().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
 
       });      
     });
   }
-
-  onNewMessage() {
-    return new Observable(observer => {
-      socket.on('mappa', (msg: string) => {
-        console.log(msg);
-        observer.next(msg);
-      });
-    });
-  }
-
-  onNewMossa(){
-    return new Observable(observer => {
-      socket.on('unit', (msg: string) => {
-        observer.next(msg);
-      });
-    });
-  }
-
-
   getMap (map: string[][]){
     let tabellaHtml : string = '<table>';
     for (let i = 0; i < map.length; i++) {
@@ -147,6 +124,7 @@ export class ViewMapComponent implements OnInit {
     for (let j = 0, i = 0; i < data.length; i= i+3, j++) {
       this.pos[j] = {posX: parseInt(data[i]), posY: parseInt(data[i+1]), dir: this.dirToNumber(data[i+2])};
     }
-    socket.emit("mappa");
+    this.service.requestMap();
+    
   }
 }

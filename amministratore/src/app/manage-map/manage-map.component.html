@@ -1,0 +1,19 @@
+<h1>Mappa modificabile</h1>
+<table class="map">
+    <tr *ngFor="let row of tmp; let i = index">
+        <td *ngFor="let cell of row; let j = index">
+            <div [ngSwitch]="cell">
+                <input *ngSwitchCase="0" type="submit" class="NTr" value=""/> 
+                <input *ngSwitchCase="1" type="submit" class="YTr" value=""/> 
+                <input *ngSwitchCase="2" type="submit" class="dir" value="^"/> 
+                <input *ngSwitchCase="3" type="submit" class="dir" value=">"/>
+                <input *ngSwitchCase="4" type="submit" class="dir" value="v"/> 
+                <input *ngSwitchCase="5" type="submit" class="dir" value="<"/> 
+                <input *ngSwitchDefault type="submit" class="POI" value="{{cell}}"/> 
+            </div>
+           
+        </td>
+    </tr>
+</table>
+
+

@@ -3,9 +3,13 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "responsabile": {
+    "amministratore": {
       "projectType": "application",
-      "schematics": {},
+      "schematics": {
+        "@schematics/angular:application": {
+          "strict": true
+        }
+      },
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -13,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/responsabile",
+            "outputPath": "dist/amministratore",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -46,13 +50,13 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "6kb",
-                  "maximumError": "10kb"
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
                 }
               ]
             }
@@ -61,18 +65,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "responsabile:build"
+            "browserTarget": "amministratore:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "responsabile:build:production"
+              "browserTarget": "amministratore:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "responsabile:build"
+            "browserTarget": "amministratore:build"
           }
         },
         "test": {
@@ -109,16 +113,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "responsabile:serve"
+            "devServerTarget": "amministratore:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "responsabile:serve:production"
+              "devServerTarget": "amministratore:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "responsabile"
+  "defaultProject": "amministratore"
 }

@@ -1,16 +1,19 @@
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ViewMapComponent } from './view-map/view-map.component';
+import { ManageMapComponent } from './manage-map/manage-map.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    ViewMapComponent,
+    AppComponent,    
+    ViewMapComponent, ManageMapComponent
   ],
   imports: [
-    BrowserModule   
+    BrowserModule,
+    AppRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
