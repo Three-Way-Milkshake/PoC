@@ -15,14 +15,13 @@ const socket = io("http://127.0.0.1:8090/");
 })
 export class MapComponent implements OnInit {
   map : string = '';
-  pos : UnitPosition [];
+  pos : UnitPosition [] = [];
   constructor(private http: HttpClient, private ngZone: NgZone) {}
 
   ngOnInit() {
     //this.getValues();
     this.onNewMossa().subscribe((data) =>{
       this.ngZone.run(() => {
-        console.log(data);
         this.changePosition(String(data));
         
       }); 
@@ -41,6 +40,7 @@ export class MapComponent implements OnInit {
   onNewMessage() {
     return new Observable(observer => {
       socket.on('mappa', (msg: string) => {
+        console.log(msg);
         observer.next(msg);
       });
     });
@@ -74,7 +74,7 @@ export class MapComponent implements OnInit {
           tabellaHtml += '<td><img src="assets/up.png"></td>';
         } else if(map[i][j] === '&'){
           let unitDir = this.getDir(i, j);
-          if        (unitDir == 0) { // facing NORD
+          if        (unitDir == 0) { // facing NORTH
             tabellaHtml += '<td><img src="assets/mulettoN.png"></td>';
           } else if (unitDir == 1) { // facing EAST
             tabellaHtml += '<td><img src="assets/mulettoE.png"></td>';
@@ -117,7 +117,6 @@ export class MapComponent implements OnInit {
       }
       i++; 
     }
-    //console.log(arr);
     for (let t = 0; t < this.pos.length; t++) {
       arr[this.pos[t].posX][this.pos[t].posY] = "&";
     }
@@ -133,13 +132,23 @@ export class MapComponent implements OnInit {
     }
   }
 
+  dirToNumber(d : string) {
+    if        (d == "UP") {
+      return 0;
+    } else if (d == "RIGHT") {
+      return 1;
+    } else if (d == "DOWN") {
+      return 2;
+    } else if (d == "LEFT") {
+      return 3;
+    }
+  }
+
   changePosition(cmd : string){
     cmd = cmd.toString().replace(/(\r\n|\n|\r)/gm, "");
     let data : string[] = cmd.toString().split(",");
     for (let j = 0, i = 0; i < data.length; i= i+3, j++) {
-      this.pos[j].posX = parseInt(data[i]);
-      this.pos[j].posY = parseInt(data[i+1]);
-      this.pos[j].dir = parseInt(data[i+2]);
+      this.pos[j] = {posX: parseInt(data[i]), posY: parseInt(data[i+1]), dir: this.dirToNumber(data[i+2])};
     }
     socket.emit("mappa");
   }
