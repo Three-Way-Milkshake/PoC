@@ -23,7 +23,6 @@ export class MapComponent implements OnInit {
     this.onNewMossa().subscribe((data) =>{
       this.ngZone.run(() => {
         this.changePosition(String(data));
-        
       }); 
     })
 
@@ -33,8 +32,6 @@ export class MapComponent implements OnInit {
 
       });      
     });
-    
-    
   }
 
   onNewMessage() {
@@ -124,12 +121,13 @@ export class MapComponent implements OnInit {
   }
 
   getDir(x : number, y : number) {
+    console.log(this.pos.length);
     for (let t = 0; t < this.pos.length; t++) {
       if (this.pos[t].posX == x && this.pos[t].posY == y) {
         return this.pos[t].dir;
       }
-      return -1;
     }
+    return -1;
   }
 
   dirToNumber(d : string) {
@@ -141,6 +139,8 @@ export class MapComponent implements OnInit {
       return 2;
     } else if (d == "LEFT") {
       return 3;
+    } else {
+      return -1;
     }
   }
 
