@@ -3,6 +3,8 @@ package it.unipd.threewaymilkshake.portacs.server;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Deque;
 
 // import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -30,6 +32,13 @@ public class TestMap {
       s+=c+" ";
     
     assertEquals("T M L M M L M R M M R M L M M M ", s); //...;PATH,T,M,L,M,M;
+  }
+
+  @Test
+  public void testReadFile() throws FileNotFoundException{
+    //String path="src/main/java/it/unipd/threewaymilkshake/portacs/server/Map.json";
+    String path=System.getProperty("user.dir")+"/resources/Map.json";
+    FileReader f=new FileReader(path);
   }
 
   @Test
