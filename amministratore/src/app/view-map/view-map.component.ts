@@ -8,11 +8,11 @@ const socket = io("http://127.0.0.1:8090/");
 
 
 @Component({
-  selector: 'app-map',
+  selector: 'app-viewmap',
   templateUrl: './map.component.html',
   styleUrls: ['./map.component.css']
 })
-export class MapComponent implements OnInit {
+export class ViewMapComponent implements OnInit {
   map : string = '';
   pos : UnitPosition [] = [];
   constructor(private ngZone: NgZone) {}
