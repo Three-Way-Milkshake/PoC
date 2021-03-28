@@ -60,13 +60,13 @@ export class MapComponent implements OnInit {
         } else if (map[i][j] === '0'){                                   // zona non transitabile
           tabellaHtml += '<td><img src="assets/black.png" ></td>';
         } else if(map[i][j] === '2'){                                    // sx -> dx
-          tabellaHtml += '<td><img src="assets/dx.png"></td>';
-        } else if(map[i][j] === '3'){                                    // up -> down
-          tabellaHtml += '<td><img src="assets/down.png"></td>';
-        } else if(map[i][j] === '4'){                                    // dx -> sx
-          tabellaHtml += '<td><img src="assets/sx.png"></td>';
-        } else if(map[i][j] === '5'){                                    // down -> up
           tabellaHtml += '<td><img src="assets/up.png"></td>';
+        } else if(map[i][j] === '3'){                                    // up -> down
+          tabellaHtml += '<td><img src="assets/dx.png"></td>';
+        } else if(map[i][j] === '4'){                                    // dx -> sx
+          tabellaHtml += '<td><img src="assets/down.png"></td>';
+        } else if(map[i][j] === '5'){                                    // down -> up
+          tabellaHtml += '<td><img src="assets/sx.png"></td>';
         } else if(map[i][j] === '&'){
           let unitDir = this.getDir(i, j);
           if        (unitDir == 0) { // facing NORTH
