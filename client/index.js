@@ -103,7 +103,9 @@ client.on('data', (data)=>{
     //muovere il muletto in automatic driving
     if (!manualDriving && !stopped) {
         changePosition(mosse.getMove());
-    }
+    }/* else if (!manualDriving) {
+        io.emit("arrows", "S");
+    }*/
     //task completata
     if (map.getCell(x, y) == lista.getFirstPOI()){
         io.emit("completedtaskbutton");
@@ -253,6 +255,8 @@ function changePosition(mossa){
               x = xTemp;
           }
           break;
+          default:
+              mossa ="S";
     }
     io.emit("updatemap", x+","+y+","+dir);
     io.emit("arrows", mossa);

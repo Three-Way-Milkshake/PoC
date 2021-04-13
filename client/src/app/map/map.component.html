@@ -12,8 +12,8 @@
     <tr *ngFor="let row of tmp; let i = index">
         <td *ngFor="let cell of row; let j = index">
             <div class="cc" [ngSwitch]="cell">
-                <div *ngSwitchCase="0" class="NTr">x</div>
-                <div *ngSwitchCase="1" class="YTr"></div>
+                <div *ngSwitchCase="0" class="NTr">&nbsp;</div>
+                <div *ngSwitchCase="1" class="YTr"> &nbsp;</div>
                 <div *ngSwitchCase="2" class="dir">&#8593;</div>
                 <div *ngSwitchCase="3" class="dir">&#8594;</div>
                 <div *ngSwitchCase="4" class="dir">&#8595;</div>
