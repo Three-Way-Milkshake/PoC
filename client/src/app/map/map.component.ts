@@ -10,6 +10,7 @@ import { UnitPosition } from './../unitposition';
 })
 export class MapComponent implements OnInit {
   map: string = ''; //html
+  tmp : string[][] = [];
   pos: UnitPosition;
   nextPOI: string = '';
   constructor(private service: MapService, private ngZone: NgZone) {
@@ -32,7 +33,7 @@ export class MapComponent implements OnInit {
     this.service.onNewPOI().subscribe((data) => {
       this.ngZone.run(() => {
         this.nextPOI = String(data);
-        console.log(data)
+        console.log(data);
       });
     });
   }
@@ -80,8 +81,7 @@ export class MapComponent implements OnInit {
     transform data in a string
   */
   setValues(data: string) {
-    var arr = new Array();
-    arr[0] = new Array();
+    this.tmp[0] = [];
     let k = 0; //virgole
     let j = 0; //parentesi
     let i = 2;
@@ -89,18 +89,32 @@ export class MapComponent implements OnInit {
       if (data[i] === "[") {
         k = 0;
         j++;
-        arr[j] = new Array();
+        this.tmp[j] = [];
       } else if (data[i] === ",") {
         k++;
         i++;
       } else if (data[i] === "]") {
       } else {
-        arr[j][k] = data[i];
+        this.tmp[j][k] = data[i];
       }
       i++;
     }
-    arr[this.pos.posY][this.pos.posX] = "&"; //metto il muletto nella mappa 
-    this.map = this.getMap(arr);
+    this.tmp[this.pos.posY][this.pos.posX] = this.dirToIntArray(); //metto il muletto nella mappa con la sua direzione
+    
+  }
+
+  dirToIntArray() {
+    if (this.pos.dir == 0) {        // facing NORD
+      return "6";
+    } else if (this.pos.dir == 1) { // facing EAST
+      return "7";
+    } else if (this.pos.dir == 2) { // facing SOUTH
+      return "8";
+    } else if (this.pos.dir == 3) { // facing WEST
+      return "9";
+    } else {                        // errore
+      return "-";
+    }
   }
 
   changePosition(mossa: string) {

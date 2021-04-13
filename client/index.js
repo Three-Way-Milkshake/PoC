@@ -163,10 +163,15 @@ io.on("connection", (socket) => {
     socket.on("mappa", () => {
         io.emit("mappa", map.getMap());
     });
-    socket.on("start", () => {
+    socket.on("start", () => { 
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
         //c.aggiungiComando("MAP");
     });
+    socket.on("alert-notification", () => {
+        c.aggiungiComando("ECC");
+        console.log("ECC");
+    }) 
+    
     //---guida manuale--
    socket.on("movement", (manualMove) => { // pressione tasti provenienti dalla guida manuale
         manualDrivingList.addMove(manualMove.toString().replace(/(\r\n|\n|\r)/gm, ""));

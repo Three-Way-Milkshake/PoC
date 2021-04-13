@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { MapComponent } from './map/map.component';
 import { TasklistComponent } from './tasklist/tasklist.component';
 import { ArrowsComponent } from './arrows/arrows.component';
+import { AdminNotificationComponent } from './admin-notification/admin-notification.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ArrowsComponent } from './arrows/arrows.component';
     MapComponent,
     TasklistComponent,
     StartButtonComponent,
-    ManualDrivingComponent
+    ManualDrivingComponent,
+    AdminNotificationComponent
   ],
   imports: [
     BrowserModule,

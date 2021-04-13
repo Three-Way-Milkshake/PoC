@@ -19,7 +19,7 @@ export class ManageMapComponent implements OnInit {
       });      
     });
   }
-
+/*
   getMap (map: string[][]){
     let tabellaHtml : string = '<table>';
     for (let i = 0; i < map.length; i++) {
@@ -46,7 +46,7 @@ export class ManageMapComponent implements OnInit {
     tabellaHtml += '</table>';
     return tabellaHtml;
   }
-
+*/
   setValues(data : string) {
     
     var arr = new Array();
@@ -72,7 +72,7 @@ export class ManageMapComponent implements OnInit {
       i++; 
     }
     console.log(this.tmp);
-    this.map = this.getMap(arr);
+    //this.map = this.getMap(arr);
     
   }
 
