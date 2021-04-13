@@ -266,8 +266,8 @@ setInterval(() => {
     if (manualDriving) {
         let tempMove = manualDrivingList.getLastInsertMove();
         manualDrivingList.deleteAllMoves();
-        if (!manualStop) {
+        if (!manualStop || tempMove == "R" || tempMove == "L" || tempMove == "T") {
             changePosition(tempMove === undefined ? "M" : tempMove);
-        }
+        } 
     }
 }, 1000);
