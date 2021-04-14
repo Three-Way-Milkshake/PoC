@@ -1,6 +1,7 @@
 package it.unipd.threewaymilkshake.portacs.server;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Deque;
@@ -20,7 +21,9 @@ class ConnectionAccepter implements Runnable {
     this.map=map;
     this.tasksList=tasksList;
     try {
-      ssocket = new ServerSocket(PORT);
+      // ssocket = new ServerSocket(PORT);
+      InetAddress addr = InetAddress.getByName("0.0.0.0");
+      ssocket = new ServerSocket(PORT, 0, addr);
     } catch (IOException e) {
       e.printStackTrace();
     }

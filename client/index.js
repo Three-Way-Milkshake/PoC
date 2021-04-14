@@ -1,14 +1,17 @@
-const express = require("express");
-const app = express ();
-// const HTTP_PORT = 8080;
-const HTTP_PORT = process.argv[3];
-const http = require ("http").createServer();
-const Map = require('./src/test_js/map');
-const Lista = require('./src/test_js/lista');
-const Container = require('./src/test_js/container');
-const Listamosse = require('./src/test_js/listamosse');
-const net = require('net');
-const SERVER_PORT = 1723;
+const   express         = require("express");
+const   app             = express ();
+// const HTTP_PORT          = 8080;
+const   HTTP_PORT       = process.argv[3];
+const   http            = require ("http").createServer();
+const   Map             = require('./src/test_js/map');
+const   Lista           = require('./src/test_js/lista');
+const   Container       = require('./src/test_js/container');
+const   Listamosse      = require('./src/test_js/listamosse');
+const   net             = require('net');
+const   SERVER_PORT     = 1723,
+        // need exact address of the server machine, 
+        //if localhost but running in docker need ip of the machine in the lan
+        SERVER_ADDR='localhost'/* '192.168.3.129' */; 
 
 //angular
 const io = require("socket.io")(http, {
@@ -48,7 +51,7 @@ let c = new Container();
 
   //-----------------------------CLIENT---------------------------------
 
-var client = net.connect(SERVER_PORT, 'localhost', ()=>{
+var client = net.connect(SERVER_PORT, SERVER_ADDR, ()=>{
     console.log('connected to server');
     client.write("UNIT\n");
     client.setNoDelay();
@@ -166,6 +169,7 @@ io.on("connection", (socket) => {
     socket.on("start", () => {
         c.aggiungiComando("PATH,0"); //PATH -> taskfinite -> gestito da server | 0 false -> richiede lo stesso percorso
         //c.aggiungiComando("MAP");
+        console.log("started");
     });
     //---guida manuale--
    socket.on("movement", (manualMove) => { // pressione tasti provenienti dalla guida manuale
@@ -201,7 +205,7 @@ io.on("connection", (socket) => {
 });
 
 http.listen(HTTP_PORT, () => {
-    console.log("server is listening" + HTTP_PORT);
+    console.log("Internal server (for socket.io) is listening" + HTTP_PORT);
 })
 
 function changePosition(mossa){
