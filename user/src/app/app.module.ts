@@ -9,6 +9,9 @@ import { ManagerComponent } from './manager/manager.component';
 import { AdminComponent } from './admin/admin.component';
 import { GenericComponent } from './generic/generic.component';
 import { ViewMapComponent } from './generic/view-map/view-map.component';
+import { POIListComponent } from './generic/poilist/poilist.component';
+import { PersonalAccountComponent } from './generic/personal-account/personal-account.component';
+
 
 @NgModule({
   declarations: [
@@ -17,7 +20,9 @@ import { ViewMapComponent } from './generic/view-map/view-map.component';
     ManagerComponent,
     AdminComponent,
     GenericComponent,
-    ViewMapComponent
+    ViewMapComponent,
+    POIListComponent,
+    PersonalAccountComponent
   ],
   imports: [
     BrowserModule,

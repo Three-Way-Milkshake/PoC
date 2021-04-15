@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
 import { UnitPosition } from 'src/app/unitposition';
-import { Location } from '@angular/common';
+
 
 const socket = io("http://127.0.0.1:8090/");
 
@@ -16,7 +16,7 @@ const socket = io("http://127.0.0.1:8090/");
 export class ViewMapComponent implements OnInit {
   map : string = '';
   pos : UnitPosition [] = [];
-  constructor(private ngZone: NgZone, private location: Location) {}
+  constructor(private ngZone: NgZone) {}
 
   ngOnInit() {
     this.onNewMossa().subscribe((data) =>{
@@ -151,7 +151,5 @@ export class ViewMapComponent implements OnInit {
     socket.emit("mappa");
   }
 
-  goBack(): void {
-    this.location.back();
-  }
+  
 }

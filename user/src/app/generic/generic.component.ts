@@ -11,5 +11,5 @@ export class GenericComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  
 }
