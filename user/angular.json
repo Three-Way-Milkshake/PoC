@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "responsabile": {
+    "user": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -16,7 +16,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/responsabile",
+            "outputPath": "dist/user",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -64,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "responsabile:build"
+            "browserTarget": "user:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "responsabile:build:production"
+              "browserTarget": "user:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "responsabile:build"
+            "browserTarget": "user:build"
           }
         },
         "test": {
@@ -112,16 +112,16 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "responsabile:serve"
+            "devServerTarget": "user:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "responsabile:serve:production"
+              "devServerTarget": "user:serve:production"
             }
           }
         }
       }
     }
   },
-  "defaultProject": "responsabile"
+  "defaultProject": "user"
 }
