@@ -19,7 +19,7 @@ export class PersonalAccountComponent implements OnInit {
       this.ngZone.run(() => {
         
         this.setValues(String(data));
-        
+      
       });      
     });
     

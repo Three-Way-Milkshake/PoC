@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { POIListService } from './../generic-service/poilist.service';
+import { Component, OnInit, NgZone } from '@angular/core';
 
 @Component({
   selector: 'app-poilist',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class POIListComponent implements OnInit {
   list: string[] = [];
-  constructor() { }
+  constructor(private service : POIListService, private ngZone: NgZone) { }
 
   ngOnInit(): void {
+    this.service.onNewPOIList().subscribe((data) => {
+      this.ngZone.run(() => {
+        this.setValues(String(data));
+        
+      });      
+    });
+  }
+
+  setValues(s: string) {
+    let tmp : string[] = s.split(",");
+    for (let i = 0; i < tmp.length; i++){
+      this.list[i] = tmp[i];
+    }
   }
 
 }

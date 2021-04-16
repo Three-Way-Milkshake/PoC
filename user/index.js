@@ -4,6 +4,7 @@ const HTTP_PORT = 8090;
 const http = require ("http").createServer();
 const Map = require('./js/map');
 const UserInformation = require('./js/user-information');
+const POIlist = require('./js/POIlist')
 const net = require('net');
 const SERVER_PORT = 1723;
 
@@ -16,6 +17,7 @@ const io = require("socket.io")(http, {
 
 let user = new UserInformation();
 let map = new Map();
+let poil = new POIlist();
 let x = [];
 let y = [];
 let dir = [];
@@ -57,7 +59,9 @@ client.on('data', (data)=>{
                     mul += cmd[k] + (cmd.length - k <= 1? "" : ",");
                 }
                 io.emit("unit", mul);
-                break; 
+                break;
+            
+
             default: 
                 console.log("Unrecognized message from server");
         }
@@ -99,6 +103,11 @@ io.on("connection", (socket) => {
     socket.on("mappa", () => {
         socket.emit("mappa", map.getMap());
     });
+    socket.on("poilist", () => {
+        socket.emit("poilist", poil.getListString());
+    })
+    socket.emit("poilist", poil.getListString());
+    
 });
 
 http.listen(HTTP_PORT, () => {
