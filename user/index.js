@@ -50,8 +50,7 @@ client.on('data', (data)=>{
             case "MAP":
                 
                 map.createMap(cmd[1], cmd[2], cmd[3]);
-                io.emit("mappa", map.getMap());
-                
+                io.emit("map", map.getMap());
                 break;
             case "UNI":
                 let mul = "";
@@ -92,7 +91,6 @@ function onErr(err) {
 io.on("connection", (socket) => {
 
     socket.on("newuserinformation", (data) => {
-        console.log(data);
         let userInfo = data.toString().split(',');
         user.setInfo(userInfo[0], userInfo[1], userInfo[2]);
         socket.emit("userinformation", user.getInformation());
@@ -100,14 +98,21 @@ io.on("connection", (socket) => {
     socket.on("getinfoaccount", () => {
         socket.emit("userinformation", user.getInformation());
     });
-    socket.on("mappa", () => {
-        socket.emit("mappa", map.getMap());
+    socket.on("getmap", () => {
+        socket.emit("map", map.getMap());
     });
-    socket.on("poilist", () => {
+    socket.on("getmanagemap", () => {
+        socket.emit("managemap", map.getMap());
+    });
+    socket.on("getpoilist", () => {
         socket.emit("poilist", poil.getListString());
+    });
+    socket.on("changedmap", (data) => {
+        map.setMap(data);
+        //inviare al server
     })
-    socket.emit("poilist", poil.getListString());
-    
+
+
 });
 
 http.listen(HTTP_PORT, () => {

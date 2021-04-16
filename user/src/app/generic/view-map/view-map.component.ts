@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { io } from "socket.io-client";
 import { Observable } from 'rxjs';
 import { NgZone } from '@angular/core';
-import { UnitPosition } from 'src/app/unitposition';
+import { UnitPosition } from '../../unitposition';
 
 
 const socket = io("http://127.0.0.1:8090/");
@@ -15,11 +15,13 @@ const socket = io("http://127.0.0.1:8090/");
 })
 export class ViewMapComponent implements OnInit {
   map : string = '';
+  tmp : string[][] = [];
   pos : UnitPosition [] = [];
+  
   constructor(private ngZone: NgZone) {}
 
   ngOnInit() {
-    this.onNewMossa().subscribe((data) =>{
+    this.onNewAction().subscribe((data) =>{
       this.ngZone.run(() => {
         this.changePosition(String(data));
       }); 
@@ -35,14 +37,13 @@ export class ViewMapComponent implements OnInit {
 
   onNewMessage() {
     return new Observable(observer => {
-      socket.on('mappa', (msg: string) => {
-        console.log(msg);
+      socket.on('map', (msg: string) => {
         observer.next(msg);
       });
     });
   }
 
-  onNewMossa(){
+  onNewAction(){
     return new Observable(observer => {
       socket.on('unit', (msg: string) => {
         observer.next(msg);
@@ -91,33 +92,31 @@ export class ViewMapComponent implements OnInit {
     
     return tabellaHtml;
   }
-  
-  setValues(data : string) {
-    
-    var arr = new Array();
-    arr[0] = new Array();
+
+  setValues(data: string) {
+    this.tmp[0] = [];
     let k = 0; //virgole
     let j = 0; //parentesi
     let i = 2;
-    while(i < data.length) {
+    while (i < data.length) {
       if (data[i] === "[") {
         k = 0;
         j++;
-        arr[j] = new Array();
+        this.tmp[j] = [];
       } else if (data[i] === ",") {
         k++;
         i++;
       } else if (data[i] === "]") {
       } else {
-        arr[j][k] = data[i];
+        this.tmp[j][k] = data[i];
       }
-      i++; 
+      i++;
     }
     for (let t = 0; t < this.pos.length; t++) {
-      arr[this.pos[t].posX][this.pos[t].posY] = "&";
+      this.tmp[this.pos[t].posX][this.pos[t].posY] = (this.pos[t].dir).toString();
     }
-    this.map = this.getMap(arr);
   }
+  
 
   getDir(x : number, y : number) {
     for (let t = 0; t < this.pos.length; t++) {
@@ -130,13 +129,13 @@ export class ViewMapComponent implements OnInit {
 
   dirToNumber(d : string) {
     if        (d == "UP") {
-      return 0;
+      return 6;
     } else if (d == "RIGHT") {
-      return 1;
+      return 7;
     } else if (d == "DOWN") {
-      return 2;
+      return 8;
     } else if (d == "LEFT") {
-      return 3;
+      return 9;
     } else {
       return -1;
     }
@@ -148,8 +147,10 @@ export class ViewMapComponent implements OnInit {
     for (let j = 0, i = 0; i < data.length; i= i+3, j++) {
       this.pos[j] = {posX: parseInt(data[i]), posY: parseInt(data[i+1]), dir: this.dirToNumber(data[i+2])};
     }
-    socket.emit("mappa");
+    socket.emit("getmap");
   }
+
+  
 
   
 }

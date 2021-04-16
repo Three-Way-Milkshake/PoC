@@ -38,45 +38,7 @@ export class MapComponent implements OnInit {
     });
   }
 
-  getMap(map: string[][]) {
-    let tabellaHtml: string = '<table>';
-    for (let i = 0; i < map.length; i++) {
-      tabellaHtml += '<tr>';
-      for (let j = 0; j < map[i].length; j++) {
-        if (map[i][j] === '1') {                                          // zona transitabile
-          tabellaHtml += '<td><img src="assets/white.png"></td>';
-        } else if (map[i][j] === '0') {                                   // zona non transitabile
-          tabellaHtml += '<td><img src="assets/black.png" ></td>';
-        } else if (map[i][j] === '2') {                                    // sx -> dx
-          tabellaHtml += '<td><img src="assets/up.png"></td>';
-        } else if (map[i][j] === '3') {                                    // up -> down
-          tabellaHtml += '<td><img src="assets/dx.png"></td>';
-        } else if (map[i][j] === '4') {                                    // dx -> sx
-          tabellaHtml += '<td><img src="assets/down.png"></td>';
-        } else if (map[i][j] === '5') {                                    // down -> up
-          tabellaHtml += '<td><img src="assets/sx.png"></td>';
-        } else if (map[i][j] === '&') {
-          //controllare la direzione e far stampare immagine corretta
-          if        (this.pos.dir == 0) { // facing NORD
-            tabellaHtml += '<td><img src="assets/mulettoN.png"></td>';
-          } else if (this.pos.dir == 1) { // facing EAST
-            tabellaHtml += '<td><img src="assets/mulettoE.png"></td>';
-          } else if (this.pos.dir == 2) { // facing SOUTH
-            tabellaHtml += '<td><img src="assets/mulettoS.png"></td>';
-          } else if (this.pos.dir == 3) { // facing WEST
-            tabellaHtml += '<td><img src="assets/mulettoO.png"></td>';
-          }
-        } else if (map[i][j] == this.nextPOI) {
-          tabellaHtml += '<td><img src="assets/red.png"></td>';
-        } else {
-          tabellaHtml += '<td style="background-color: red;">' + map[i][j] + '</td>';
-        }
-      }
-      tabellaHtml += '</tr>';
-    }
-    tabellaHtml += '</table>';
-    return tabellaHtml;
-  }
+  
   /*
     transform data in a string
   */

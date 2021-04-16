@@ -1,3 +1,4 @@
+import { ManageMapComponent } from './admin/manage-map/manage-map.component';
 import { PersonalAccountComponent } from './generic/personal-account/personal-account.component';
 
 import { NgModule } from '@angular/core';
@@ -18,6 +19,10 @@ const routes: Routes = [
     path: 'account',
     component: PersonalAccountComponent
   },
+  {
+    path: 'managemap',
+    component: ManageMapComponent
+  }
 ];
 
 @NgModule({

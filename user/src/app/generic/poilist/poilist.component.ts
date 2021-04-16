@@ -11,6 +11,7 @@ export class POIListComponent implements OnInit {
   constructor(private service : POIListService, private ngZone: NgZone) { }
 
   ngOnInit(): void {
+    this.getValues();
     this.service.onNewPOIList().subscribe((data) => {
       this.ngZone.run(() => {
         this.setValues(String(data));
@@ -24,6 +25,9 @@ export class POIListComponent implements OnInit {
     for (let i = 0; i < tmp.length; i++){
       this.list[i] = tmp[i];
     }
+  }
+  getValues() {
+    this.service.getValues();
   }
 
 }

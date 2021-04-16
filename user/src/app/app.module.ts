@@ -11,6 +11,7 @@ import { GenericComponent } from './generic/generic.component';
 import { ViewMapComponent } from './generic/view-map/view-map.component';
 import { POIListComponent } from './generic/poilist/poilist.component';
 import { PersonalAccountComponent } from './generic/personal-account/personal-account.component';
+import { ManageMapComponent } from './admin/manage-map/manage-map.component';
 
 
 @NgModule({
@@ -22,7 +23,8 @@ import { PersonalAccountComponent } from './generic/personal-account/personal-ac
     GenericComponent,
     ViewMapComponent,
     POIListComponent,
-    PersonalAccountComponent
+    PersonalAccountComponent,
+    ManageMapComponent
   ],
   imports: [
     BrowserModule,
