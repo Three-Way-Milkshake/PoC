@@ -9,6 +9,7 @@ import { MapComponent } from './map/map.component';
 import { TasklistComponent } from './tasklist/tasklist.component';
 import { ArrowsComponent } from './arrows/arrows.component';
 import { AdminNotificationComponent } from './admin-notification/admin-notification.component';
+import {ButtonModule} from 'primeng/button';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { AdminNotificationComponent } from './admin-notification/admin-notificat
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

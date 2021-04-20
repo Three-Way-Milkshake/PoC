@@ -16,7 +16,8 @@
         <app-map></app-map>
     </div>
 
-    <button class="cambioguida" (click)="cambio()">Metti in guida {{guida}}</button>
+    
+    <button pButton type="button"  label="Metti in guida {{guida}}" (click)="cambio()"></button>
 
     <div class="guida">
     <div *ngIf="automatica; else manuale">
